@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sansan's Chiang Mai List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g900:#1A3D24;--g700:#2D6A3F;--g500:#4A9A5E;--g300:#8ECBA0;
+  --g100:#C8E8D0;--g50:#EAF6EE;--g20:#F5FBF7;
+  --white:#FFFFFF;--ink:#1C2E20;--mid:#4A6A52;--soft:#7A9A82;
+  --border:#D4EAD8;--border2:#E8F4EB;
+  --amber:#D4860A;--sky:#3B8FD4;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--g20);color:var(--ink);min-height:100vh;overflow-x:hidden}
+
+/* ── WAVE BORDER ── */
+.wave-top{height:18px;background:var(--g700);position:relative;overflow:hidden}
+.wave-top::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:18px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 18'%3E%3Cpath d='M0 18 Q10 4 20 18 Q30 4 40 18 Q50 4 60 18 Q70 4 80 18Z' fill='%23F5FBF7'/%3E%3C/svg%3E") repeat-x bottom;background-size:80px 18px}
+
+.wave-bot{height:18px;background:var(--g700);position:relative;overflow:hidden}
+.wave-bot::before{content:'';position:absolute;top:-1px;left:0;right:0;height:18px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 18'%3E%3Cpath d='M0 0 Q10 14 20 0 Q30 14 40 0 Q50 14 60 0 Q70 14 80 0Z' fill='%23F5FBF7'/%3E%3C/svg%3E") repeat-x top;background-size:80px 18px}
+
+/* ── HERO ── */
+.hero{
+  background:var(--white);
+  padding:3rem 2rem 2.5rem;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  border-bottom:1px solid var(--border2);
+}
+.hero-bg-leaves{position:absolute;inset:0;pointer-events:none}
+.hero-leaf-svg{position:absolute;opacity:.06}
+
+.hero-eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--g500);margin-bottom:.6rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:3rem;color:var(--g900);line-height:1.1;margin-bottom:.4rem}
+.hero h1 em{color:var(--g700);font-style:italic}
+.hero-sub{font-size:13.5px;color:var(--soft);margin-bottom:1.5rem;letter-spacing:.03em}
+
+.hero-figure{margin:.5rem auto 0;width:148px;height:168px;display:block}
+
+.hero-stats{display:flex;justify-content:center;gap:3rem;margin-top:1.8rem}
+.stat-num{font-family:'Playfair Display',serif;font-size:2rem;color:var(--g700);display:block}
+.stat-label{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--soft);display:block}
+
+/* ── HOTEL BAR ── */
+.hotel-wrap{background:var(--g700)}
+.hotel-bar{max-width:880px;margin:0 auto;padding:.9rem 1.5rem;display:flex;align-items:center;gap:10px}
+.hotel-icon{width:34px;height:34px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px}
+.hotel-input{flex:1;font-family:'DM Sans',sans-serif;font-size:13px;border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:7px 12px;background:rgba(255,255,255,.15);color:#fff;outline:none;transition:border-color .15s}
+.hotel-input::placeholder{color:rgba(255,255,255,.55)}
+.hotel-input:focus{border-color:rgba(255,255,255,.7);background:rgba(255,255,255,.22)}
+.hotel-btn{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:7px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.18);color:#fff;cursor:pointer;white-space:nowrap;transition:all .15s}
+.hotel-btn:hover{background:rgba(255,255,255,.3)}
+.hotel-hint{max-width:880px;margin:0 auto;font-size:11px;color:rgba(255,255,255,.55);padding:.25rem 1.5rem .65rem}
+
+/* ── STICKY FILTER ── */
+.filter-wrap{background:var(--white);border-bottom:1px solid var(--border2);position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(28,74,42,.06)}
+.filter-row{max-width:880px;margin:0 auto;display:flex;gap:8px;padding:.75rem 1.5rem;overflow-x:auto;scrollbar-width:none}
+.filter-row::-webkit-scrollbar{display:none}
+.pill{flex-shrink:0;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:6px 16px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--mid);cursor:pointer;transition:all .18s;white-space:nowrap}
+.pill:hover{background:var(--g50);border-color:var(--g300)}
+.pill.active{background:var(--g700);color:#fff;border-color:var(--g700)}
+
+/* ── MAIN ── */
+.main{max-width:880px;margin:0 auto;padding:0 1.5rem}
+
+/* ── SECTION HEADING ── */
+.section{padding:1.75rem 0 .5rem}
+.section-head{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:400;color:var(--g900);margin-bottom:1.1rem;display:flex;align-items:center;gap:12px}
+.section-head::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--g100) 0%,transparent 100%)}
+
+/* ── TOP PICKS ── */
+.top-list{display:flex;flex-direction:column;gap:10px}
+.top-item{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:14px 16px;border:1px solid var(--border2);border-radius:14px;
+  background:var(--white);transition:border-color .15s,box-shadow .15s;
+}
+.top-item:hover{border-color:var(--g300);box-shadow:0 2px 14px rgba(45,106,63,.08)}
+.top-num{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--g500);min-width:26px;line-height:1.1;flex-shrink:0}
+.top-info{flex:1}
+.top-name{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:2px}
+.top-desc{font-size:12px;color:var(--mid);margin-bottom:5px}
+.top-quote{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:12px;color:var(--g700);
+  border-left:2px solid var(--g300);padding-left:8px;
+  line-height:1.5;
+}
+.map-btn{
+  font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;
+  padding:5px 12px;border-radius:999px;
+  border:1px solid var(--border);background:transparent;
+  color:var(--mid);cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0;
+}
+.map-btn:hover,.map-btn.on{background:var(--g700);color:#fff;border-color:var(--g700)}
+
+/* ── GRID ── */
+.grid-section{padding:.75rem 0 2rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(188px,1fr));gap:12px}
+@media(max-width:520px){.grid{grid-template-columns:repeat(2,1fr);gap:8px}}
+
+.card{background:var(--white);border:1px solid var(--border2);border-radius:16px;overflow:hidden;transition:border-color .18s,box-shadow .18s,transform .18s;display:flex;flex-direction:column}
+.card:hover{border-color:var(--g300);box-shadow:0 6px 24px rgba(45,106,63,.09);transform:translateY(-2px)}
+.card-thumb{width:100%;aspect-ratio:4/3;display:block;overflow:hidden;background:var(--g50)}
+.card-thumb svg{width:100%;height:100%;display:block}
+.card-body{padding:.8rem 1rem .95rem;flex:1;display:flex;flex-direction:column}
+.card-cat{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin-bottom:4px}
+.card-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:400;color:var(--ink);margin-bottom:5px;line-height:1.3}
+.card-meta{font-size:11.5px;color:var(--mid);line-height:1.5;flex:1;margin-bottom:9px}
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid var(--border2);gap:5px;flex-wrap:wrap}
+.rating{font-size:12px;color:var(--mid);display:flex;align-items:center;gap:3px}
+.star{color:var(--g500);font-size:11px}
+.badge-pick{font-size:10px;padding:2px 8px;border-radius:999px;background:var(--g50);color:var(--g900);border:1px solid var(--g100);font-weight:500;flex-shrink:0}
+.badge-nimman{font-size:10px;padding:2px 8px;border-radius:999px;background:#EAF0FD;color:#1A3A8A;border:1px solid #B0C4E8;font-weight:500;flex-shrink:0}
+.badge-view{font-size:10px;padding:2px 8px;border-radius:999px;background:#FEF3E2;color:#7A4A08;border:1px solid #F0CCA0;font-weight:500;flex-shrink:0}
+.badge-kids{font-size:10px;padding:2px 8px;border-radius:999px;background:#FDE8F5;color:#7A1A5A;border:1px solid #F0A8D8;font-weight:500;flex-shrink:0}
+
+/* ── ADD TO PLAN BUTTON ── */
+.add-btn{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;padding:3px 9px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--soft);cursor:pointer;transition:all .15s;flex-shrink:0;line-height:1.4}
+.add-btn:hover{background:var(--g50);border-color:var(--g300);color:var(--g700)}
+.add-btn.added{background:var(--g700);color:#fff;border-color:var(--g700)}
+.add-btn.added::before{content:'✓ ';}
+
+/* ── PLAN FAB ── */
+.plan-fab{
+  position:fixed;bottom:24px;right:24px;z-index:200;
+  display:none;
+  background:var(--g700);color:#fff;
+  border:none;border-radius:999px;
+  padding:12px 20px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  cursor:pointer;box-shadow:0 4px 20px rgba(45,106,63,.35);
+  transition:transform .15s,box-shadow .15s;
+  align-items:center;gap:8px;
+}
+.plan-fab:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(45,106,63,.4)}
+.plan-fab.show{display:flex}
+.plan-fab-count{
+  background:rgba(255,255,255,.25);
+  border-radius:999px;padding:1px 8px;font-size:11px;font-weight:600;
+}
+
+/* ── ROADMAP PANEL ── */
+.plan-overlay{
+  display:none;position:fixed;inset:0;z-index:300;
+  background:rgba(28,46,32,.5);backdrop-filter:blur(4px);
+}
+.plan-overlay.open{display:block}
+.plan-panel{
+  position:fixed;right:0;top:0;bottom:0;z-index:301;
+  width:min(480px,100vw);
+  background:var(--white);
+  display:flex;flex-direction:column;
+  box-shadow:-8px 0 40px rgba(28,46,32,.15);
+  transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+}
+.plan-panel.open{transform:translateX(0)}
+.plan-header{
+  background:var(--g700);padding:1.25rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.plan-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:#fff;font-weight:400}
+.plan-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.plan-close:hover{background:rgba(255,255,255,.3)}
+
+.plan-start-wrap{padding:1rem 1.5rem;border-bottom:1px solid var(--border2);background:var(--g50);flex-shrink:0}
+.plan-start-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);margin-bottom:6px}
+.plan-start-row{display:flex;gap:8px;align-items:center}
+.plan-start-input{
+  flex:1;font-family:'DM Sans',sans-serif;font-size:12px;
+  border:1px solid var(--border);border-radius:8px;
+  padding:7px 10px;background:var(--white);color:var(--ink);outline:none;
+  transition:border-color .15s;
+}
+.plan-start-input:focus{border-color:var(--g500)}
+.plan-start-input::placeholder{color:var(--soft)}
+.plan-set-btn{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:7px 12px;border-radius:8px;border:1px solid var(--g300);background:var(--g700);color:#fff;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:opacity .15s}
+.plan-set-btn:hover{opacity:.85}
+.plan-start-display{font-size:12px;color:var(--g700);font-weight:500;display:none;margin-top:4px}
+
+.plan-list-wrap{flex:1;overflow-y:auto;padding:1rem 1.5rem}
+.plan-empty{text-align:center;padding:3rem 1rem;color:var(--soft)}
+.plan-empty-icon{font-size:2.5rem;display:block;margin-bottom:.75rem}
+.plan-empty p{font-size:13px;line-height:1.6}
+
+.plan-item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:12px 0;border-bottom:1px solid var(--border2);
+  position:relative;
+}
+.plan-item:last-child{border-bottom:none}
+.plan-step{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--g700);color:#fff;
+  font-family:'Playfair Display',serif;font-size:.9rem;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:2px;
+}
+.plan-item-info{flex:1}
+.plan-item-name{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:2px}
+.plan-item-cat{font-size:11px;color:var(--soft)}
+.plan-item-actions{display:flex;flex-direction:column;gap:5px;align-items:flex-end}
+.plan-dir-btn{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;padding:3px 9px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--mid);cursor:pointer;transition:all .15s;white-space:nowrap}
+.plan-dir-btn:hover{background:var(--g700);color:#fff;border-color:var(--g700)}
+.plan-rm-btn{font-family:'DM Sans',sans-serif;font-size:10px;padding:2px 8px;border-radius:999px;border:1px solid #fcc;background:transparent;color:#c44;cursor:pointer;transition:all .15s;white-space:nowrap}
+.plan-rm-btn:hover{background:#fcc}
+
+.plan-connector{width:2px;background:var(--g100);height:20px;margin-left:13px;flex-shrink:0}
+
+.plan-actions{padding:1rem 1.5rem;border-top:1px solid var(--border2);display:flex;flex-direction:column;gap:10px;flex-shrink:0;background:var(--white)}
+.plan-open-all{
+  width:100%;padding:11px;border-radius:10px;
+  border:none;background:var(--g700);color:#fff;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  cursor:pointer;transition:opacity .15s;
+}
+.plan-open-all:hover{opacity:.88}
+.plan-open-all:disabled{opacity:.4;cursor:not-allowed}
+.plan-clear{
+  width:100%;padding:9px;border-radius:10px;
+  border:1px solid var(--border);background:transparent;color:var(--soft);
+  font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all .15s;
+}
+.plan-clear:hover{border-color:#fcc;color:#c44}
+.plan-share-hint{font-size:11px;color:var(--soft);text-align:center}
+.card-map-btn{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;padding:3px 9px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--soft);cursor:pointer;transition:all .15s;flex-shrink:0}
+.card-map-btn:hover,.card-map-btn.on{background:var(--g700);color:#fff;border-color:var(--g700)}
+
+/* ── FOOTER ── */
+.site-footer{background:var(--g700);text-align:center;padding:2.5rem 1.5rem;font-size:12px;color:rgba(200,232,208,.65)}
+.wordmark{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--g100);display:block;margin-bottom:.4rem}
+
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="wave-top"></div>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-bg-leaves">
+    <svg class="hero-leaf-svg" style="left:-60px;top:-30px;width:260px;transform:rotate(-15deg)" viewBox="0 0 200 340"><path d="M100 330C55 260 5 180 25 90 45 5 155 -5 175 80 195 160 155 255 100 330Z" fill="#2D6A3F"/></svg>
+    <svg class="hero-leaf-svg" style="right:-40px;top:10px;width:200px;transform:rotate(20deg)" viewBox="0 0 200 340"><path d="M100 330C55 260 5 180 25 90 45 5 155 -5 175 80 195 160 155 255 100 330Z" fill="#4A9A5E"/></svg>
+    <svg class="hero-leaf-svg" style="left:30%;bottom:-20px;width:120px;transform:rotate(5deg)" viewBox="0 0 200 340"><path d="M100 330C55 260 5 180 25 90 45 5 155 -5 175 80 195 160 155 255 100 330Z" fill="#2D6A3F"/></svg>
+    <svg class="hero-leaf-svg" style="right:25%;top:-10px;width:90px;transform:rotate(-8deg)" viewBox="0 0 200 340"><path d="M100 330C55 260 5 180 25 90 45 5 155 -5 175 80 195 160 155 255 100 330Z" fill="#4A9A5E"/></svg>
+  </div>
+
+  <div class="hero-eyebrow">เชียงใหม่ · Chiang Mai · 清迈</div>
+  <h1>Sansan's <em>Chiang Mai</em> List</h1>
+  <div class="hero-sub">The places I send every friend to first</div>
+
+  <svg class="hero-figure" viewBox="0 0 140 160" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="68" width="16" height="24" rx="3" fill="#4A9A5E"/>
+    <rect x="14" y="72" width="6" height="16" rx="2" fill="#1A3D24"/>
+    <rect x="20" y="78" width="100" height="4" rx="2" fill="#8ECBA0"/>
+    <rect x="120" y="72" width="6" height="16" rx="2" fill="#1A3D24"/>
+    <rect x="124" y="68" width="16" height="24" rx="3" fill="#4A9A5E"/>
+    <ellipse cx="70" cy="105" rx="18" ry="22" fill="#F5C4A0"/>
+    <path d="M52 100 Q52 118 70 122 Q88 118 88 100 Q80 95 70 94 Q60 95 52 100Z" fill="#2D6A3F"/>
+    <path d="M62 102 Q70 97 78 102 Q70 107 62 102Z" fill="#8ECBA0" opacity=".5"/>
+    <path d="M52 98 Q40 88 22 82" stroke="#F5C4A0" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <path d="M88 98 Q100 88 118 82" stroke="#F5C4A0" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <path d="M60 122 Q58 135 56 148" stroke="#1A3D24" stroke-width="11" stroke-linecap="round" fill="none"/>
+    <path d="M80 122 Q82 135 84 148" stroke="#1A3D24" stroke-width="11" stroke-linecap="round" fill="none"/>
+    <ellipse cx="54" cy="151" rx="10" ry="5" fill="#0D2214"/>
+    <ellipse cx="86" cy="151" rx="10" ry="5" fill="#0D2214"/>
+    <path d="M52 110 Q60 125 70 126 Q80 125 88 110 Q80 115 70 116 Q60 115 52 110Z" fill="#1A3D24"/>
+    <rect x="64" y="86" width="12" height="12" rx="3" fill="#F5C4A0"/>
+    <ellipse cx="70" cy="74" rx="20" ry="22" fill="#F5C4A0"/>
+    <ellipse cx="70" cy="58" rx="20" ry="14" fill="#1A0A00"/>
+    <path d="M50 64 Q46 75 50 80" stroke="#1A0A00" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <path d="M90 64 Q94 72 92 78" stroke="#1A0A00" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <circle cx="85" cy="52" r="8" fill="#1A0A00"/>
+    <path d="M80 44 Q85 37 90 44" fill="none" stroke="#8ECBA0" stroke-width="2"/>
+    <path d="M83 40 Q87 34 91 40 Q87 46 83 40Z" fill="#4A9A5E"/>
+    <circle cx="87" cy="39" r="2.5" fill="#C8E8D0"/>
+    <ellipse cx="63" cy="73" rx="5" ry="6" fill="white"/>
+    <ellipse cx="77" cy="73" rx="5" ry="6" fill="white"/>
+    <ellipse cx="63" cy="74" rx="3.5" ry="4.5" fill="#1A3A22"/>
+    <ellipse cx="77" cy="74" rx="3.5" ry="4.5" fill="#1A3A22"/>
+    <circle cx="64.5" cy="72.5" r="1.2" fill="white"/>
+    <circle cx="78.5" cy="72.5" r="1.2" fill="white"/>
+    <path d="M58 67 Q63 65 68 67" stroke="#1A0A00" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M72 67 Q77 65 82 67" stroke="#1A0A00" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="58" cy="78" rx="5" ry="3" fill="#FFB0A0" opacity=".5"/>
+    <ellipse cx="82" cy="78" rx="5" ry="3" fill="#FFB0A0" opacity=".5"/>
+    <path d="M65 83 Q70 87 75 83" stroke="#C06040" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M28 52 L30 47 L32 52 L37 54 L32 56 L30 61 L28 56 L23 54Z" fill="#8ECBA0" opacity=".8"/>
+    <path d="M106 44 L108 40 L110 44 L114 46 L110 48 L108 52 L106 48 L102 46Z" fill="#8ECBA0" opacity=".7"/>
+    <circle cx="22" cy="64" r="2" fill="#8ECBA0" opacity=".6"/>
+    <circle cx="116" cy="60" r="2" fill="#8ECBA0" opacity=".6"/>
+  </svg>
+
+  <div class="hero-stats">
+    <div><span class="stat-num" id="totalNum">63</span><span class="stat-label">Places</span></div>
+    <div><span class="stat-num">8</span><span class="stat-label">Categories</span></div>
+    <div><span class="stat-num">5</span><span class="stat-label">Top Picks</span></div>
+  </div>
+</div>
+
+<!-- ══ HOTEL BAR ══ -->
+<div class="hotel-wrap">
+  <div class="hotel-bar">
+    <div class="hotel-icon">📍</div>
+    <input class="hotel-input" id="hotelInput" type="text" placeholder="Starting point — hotel, Airbnb, café, or any address…"/>
+    <button class="hotel-btn" onclick="saveHotel()">Set Start</button>
+  </div>
+  <div class="hotel-hint" id="hotelHint">Set your starting point (hotel, Airbnb, coffee shop…) — every 📍 will show directions from there.</div>
+</div>
+
+<!-- ══ STICKY FILTER ══ -->
+<div class="filter-wrap">
+  <div class="filter-row">
+    <button class="pill active" onclick="filter('all',this)">All</button>
+    <button class="pill" onclick="filter('restaurant',this)">🍜 Restaurant</button>
+    <button class="pill" onclick="filter('massage',this)">💆 Massage</button>
+    <button class="pill" onclick="filter('dessert',this)">🍧 Dessert</button>
+    <button class="pill" onclick="filter('tennis',this)">🎾 Tennis</button>
+    <button class="pill" onclick="filter('market',this)">🛍 Markets</button>
+    <button class="pill" onclick="filter('nimman',this)">✨ Nimman</button>
+    <button class="pill" onclick="filter('viewpoint',this)">🌄 Viewpoints</button>
+    <button class="pill" onclick="filter('kids',this)">👶 Kids</button>
+  </div>
+</div>
+
+<!-- ══ CONTENT ══ -->
+<div class="main">
+
+  <!-- TOP PICKS -->
+  <div class="section">
+    <div class="section-head">✦ Sansan's top picks</div>
+    <div class="top-list">
+
+      <div class="top-item">
+        <div class="top-num">1</div>
+        <div class="top-info">
+          <div class="top-name">Garden to Table</div>
+          <div class="top-desc">★ 4.9 · Restaurant · Freshest Northern Thai in the city, locals queue every evening</div>
+          <div class="top-quote">"I came back to eat here 3 times because it was so good. Every bite."</div>
+        </div>
+        <button class="map-btn" onclick="openMap(this,'Garden to Table Chiangmai, 136 Ratchapakhinai Rd, Chiang Mai')">📍 Map</button>
+      </div>
+
+      <div class="top-item">
+        <div class="top-num">2</div>
+        <div class="top-info">
+          <div class="top-name">Khum Hmon Somm</div>
+          <div class="top-desc">★ 4.9 · Restaurant · Mom-and-pop gem, feeds local kids, 50฿ Khao Soi</div>
+          <div class="top-quote">"The most humbling experience. This lovely couple runs it alone. The food is incredible."</div>
+        </div>
+        <button class="map-btn" onclick="openMap(this,'Khum Hmon Somm, Soi Ragang 1, Hai Ya, Chiang Mai')">📍 Map</button>
+      </div>
+
+      <div class="top-item">
+        <div class="top-num">3</div>
+        <div class="top-info">
+          <div class="top-name">Zira Spa</div>
+          <div class="top-desc">★ 4.9 · Massage · Old City icon, 3,500+ reviews, loved by locals and regulars alike</div>
+          <div class="top-quote">"Toon had magical hands — it was an out-of-body experience."</div>
+        </div>
+        <button class="map-btn" onclick="openMap(this,'Zira Spa, 8 Ratvithi Rd, Chiang Mai')">📍 Map</button>
+      </div>
+
+      <div class="top-item">
+        <div class="top-num">4</div>
+        <div class="top-info">
+          <div class="top-name">Coach Thor</div>
+          <div class="top-desc">★ 4.9 · Tennis · Best coach in CM — 1 session beats 8 lessons elsewhere</div>
+          <div class="top-quote">"He teaches the mental and psychological side of the game. It changed how I play."</div>
+        </div>
+        <button class="map-btn" onclick="openMap(this,'Thor Tennis Coach, Chang Moi, Chiang Mai')">📍 Map</button>
+      </div>
+
+      <div class="top-item">
+        <div class="top-num">5</div>
+        <div class="top-info">
+          <div class="top-name">Doi Pui Viewpoint</div>
+          <div class="top-desc">★ 4.6 · Viewpoint · Best sunset spot in all of Chiang Mai — go before the crowd does</div>
+          <div class="top-quote">"Breathtaking panoramic views of layered green mountains. Cool air, total serenity."</div>
+        </div>
+        <button class="map-btn" onclick="openMap(this,'Doi Pui Viewpoint, Suthep, Chiang Mai')">📍 Map</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div class="grid-section">
+    <div class="section-head">All places</div>
+    <div class="grid" id="grid">
+
+<!-- ════ RESTAURANTS (10) ════ -->
+<div class="card" data-cat="restaurant">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#E8F4EC"/><rect x="0" y="120" width="240" height="60" fill="#D0E8D4"/><ellipse cx="120" cy="148" rx="72" ry="14" fill="#B8D8BE" opacity=".5"/><ellipse cx="120" cy="134" rx="70" ry="26" fill="#F8F0D8"/><ellipse cx="120" cy="122" rx="70" ry="18" fill="#FFFCF0"/><ellipse cx="120" cy="122" rx="62" ry="14" fill="#D4860A" opacity=".85"/><path d="M75 119 Q88 112 100 119 Q112 126 124 119 Q136 112 148 119 Q158 114 164 119" stroke="#F5E0A0" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M78 126 Q91 119 104 126 Q117 133 130 126 Q143 119 158 126" stroke="#F0D880" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M98 110 Q106 104 114 110 Q110 116 98 110Z" fill="#C87010"/><path d="M112 107 Q120 101 128 107 Q124 113 112 107Z" fill="#D4820A"/><path d="M126 109 Q134 103 142 109 Q138 115 126 109Z" fill="#C87010"/><ellipse cx="150" cy="122" rx="14" ry="9" fill="#C07840"/><circle cx="86" cy="116" r="5" fill="#3D8A52"/><circle cx="93" cy="112" r="4" fill="#4A9A5E"/><path d="M157 130 Q164 124 170 130 Q164 136 157 130Z" fill="#7AC840"/><ellipse cx="97" cy="124" rx="5" ry="3" fill="#C03030" opacity=".7"/><rect x="62" y="155" width="116" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="167" font-family="DM Sans,sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="600">Khao Soi — Signature Bowl</text></svg></div>
+  <div class="card-body"><div class="card-cat">Restaurant</div><div class="card-name">Garden to Table</div><div class="card-meta">Tue–Sat 4–9:30pm · Old City · Ultra-fresh Northern Thai, gluten-free friendly</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.9 (1,725)</span><span class="badge-pick">Top Pick</span><button class="card-map-btn" onclick="openMap(this,'Garden to Table, 136 Ratchapakhinai Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="restaurant">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF5EE"/><rect x="0" y="118" width="240" height="62" fill="#D8EEE0"/><ellipse cx="120" cy="148" rx="68" ry="14" fill="#C0E0C8" opacity=".5"/><ellipse cx="120" cy="134" rx="68" ry="26" fill="#E8E4C8"/><ellipse cx="120" cy="122" rx="68" ry="18" fill="#F5F0D8"/><ellipse cx="120" cy="122" rx="60" ry="14" fill="#2A2010" opacity=".8"/><path d="M70 120 Q85 115 100 120 Q115 125 130 120 Q145 115 162 120" stroke="#5A4010" stroke-width="5" fill="none" stroke-linecap="round"/><ellipse cx="105" cy="115" rx="16" ry="11" fill="#F8E040" opacity=".9"/><ellipse cx="105" cy="114" rx="8" ry="7" fill="#F04808"/><path d="M134 110 Q139 105 144 110 L142 120 L136 120Z" fill="#3A8028"/><ellipse cx="155" cy="122" rx="12" ry="7" fill="#C07048" opacity=".9"/><rect x="70" y="150" width="80" height="18" rx="9" fill="#2D6A3F"/><text x="110" y="163" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">50฿ Pad See Ew</text></svg></div>
+  <div class="card-body"><div class="card-cat">Restaurant</div><div class="card-name">Khum Hmon Somm</div><div class="card-meta">Daily 11:30am–6:30pm · Hai Ya · Mom-and-pop; donates every meal to local kids</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.9 (1,053)</span><span class="badge-pick">Top Pick</span><button class="card-map-btn" onclick="openMap(this,'Khum Hmon Somm, Soi Ragang 1, Hai Ya, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="restaurant">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EDF7F0"/><rect x="0" y="118" width="240" height="62" fill="#D5EDD9"/><ellipse cx="120" cy="136" rx="58" ry="28" fill="#2A2010" opacity=".75"/><path d="M80 120 Q95 113 110 120 Q105 127 80 120Z" fill="#5AB040" opacity=".9"/><path d="M100 117 Q115 110 130 117 Q125 124 100 117Z" fill="#6AC050" opacity=".85"/><path d="M118 115 Q133 108 148 115 Q143 122 118 115Z" fill="#4AA030"/><path d="M84 128 Q98 122 110 128 Q105 134 84 128Z" fill="#58B040"/><circle cx="88" cy="117" r="7" fill="#E03018"/><circle cx="88" cy="115" r="4" fill="#F04828" opacity=".6"/><circle cx="152" cy="120" r="6" fill="#D82810"/><ellipse cx="130" cy="122" rx="8" ry="5" fill="#E07830" opacity=".8"/><ellipse cx="100" cy="128" rx="4" ry="3" fill="#B09030"/><ellipse cx="140" cy="126" rx="4" ry="3" fill="#B09030"/><path d="M155 112 Q160 106 165 112" stroke="#90C040" stroke-width="2" fill="none"/><rect x="62" y="152" width="116" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="164" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Som Tam — Papaya Salad</text></svg></div>
+  <div class="card-body"><div class="card-cat">Restaurant</div><div class="card-name">It's Good Kitchen</div><div class="card-meta">Daily 11:30am–9pm (closed Thu) · Old City · Every dish a winner — locals queue for papaya salad</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.6 (3,751)</span><button class="card-map-btn" onclick="openMap(this,'Its Good Kitchen, 175/6 Rachadamnoen Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="restaurant">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF6EF"/><rect x="0" y="115" width="240" height="65" fill="#D4ECD8"/><circle cx="195" cy="58" r="18" fill="#4A9A5E" opacity=".2"/><rect x="191" y="58" width="8" height="28" rx="2" fill="#E8F5EC"/><path d="M195 55 Q197 49 195 44 Q193 49 195 55Z" fill="#90C870"/><ellipse cx="115" cy="150" rx="65" ry="13" fill="#B8D8C0" opacity=".5"/><ellipse cx="115" cy="134" rx="63" ry="25" fill="#E0D8B8"/><ellipse cx="115" cy="122" rx="63" ry="17" fill="#F0ECD0"/><ellipse cx="115" cy="122" rx="55" ry="13" fill="#8A4010" opacity=".85"/><ellipse cx="90" cy="120" rx="13" ry="9" fill="#C8A050" opacity=".9"/><ellipse cx="130" cy="118" rx="15" ry="10" fill="#A05020" opacity=".9"/><path d="M80 122 Q95 116 110 122 Q125 128 140 122 Q148 118 155 122" stroke="#F8E8C0" stroke-width="2" fill="none" opacity=".6"/><ellipse cx="168" cy="132" rx="18" ry="12" fill="#F0ECD8"/><rect x="55" y="154" width="120" height="17" rx="8" fill="#2D6A3F"/><text x="115" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Massaman Curry</text></svg></div>
+  <div class="card-body"><div class="card-cat">Restaurant</div><div class="card-name">Another World</div><div class="card-meta">Tue–Sun 6pm–midnight · Phra Singh · Hippie hideout, live music, legendary curry</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.9 (745)</span><button class="card-map-btn" onclick="openMap(this,'Another World, 22 Moon Muang Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="restaurant">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF6EE"/><rect x="0" y="115" width="240" height="65" fill="#D2EAD6"/><ellipse cx="120" cy="148" rx="65" ry="14" fill="#B8D8BE" opacity=".4"/><ellipse cx="120" cy="132" rx="64" ry="27" fill="#E8E4C0"/><ellipse cx="120" cy="120" rx="64" ry="18" fill="#F5F0D5"/><ellipse cx="120" cy="120" rx="56" ry="13" fill="#3D2808" opacity=".8"/><path d="M74 118 Q87 113 100 118 Q113 123 126 118 Q139 113 156 118" stroke="#7A5010" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M76 125 Q89 120 102 125 Q115 130 128 125 Q142 120 158 125" stroke="#5A3808" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M134 112 Q139 107 144 112 L142 120 L136 120Z" fill="#3A8A28"/><path d="M88 115 Q96 108 104 115 Q100 120 88 115Z" fill="#F8E040" opacity=".9"/><ellipse cx="155" cy="122" rx="11" ry="7" fill="#B86838" opacity=".9"/><rect x="60" y="154" width="120" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Nam Prik Ong Noodles</text></svg></div>
+  <div class="card-body"><div class="card-cat">Restaurant</div><div class="card-name">SO SOOD Noodles</div><div class="card-meta">Tue–Sun 9:30am–4:30pm · Old City · Insanely good nam prik ong noodles — hidden gem</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.9 (492)</span><button class="card-map-btn" onclick="openMap(this,'SO SOOD Noodles, 154 Ratchamanka Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="restaurant">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF6EF"/><rect x="0" y="115" width="240" height="65" fill="#D5EDD9"/><ellipse cx="120" cy="148" rx="68" ry="14" fill="#BCE0C4" opacity=".5"/><ellipse cx="120" cy="132" rx="66" ry="26" fill="#E8E0C0"/><ellipse cx="120" cy="120" rx="66" ry="18" fill="#F5EED8"/><ellipse cx="120" cy="120" rx="58" ry="13" fill="#4A3010" opacity=".8"/><path d="M70 118 Q83 113 96 118 Q109 123 122 118 Q135 113 155 118" stroke="#8A5810" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="100" cy="114" rx="14" ry="10" fill="#F8E040" opacity=".9"/><ellipse cx="100" cy="113" rx="7" ry="6" fill="#F04808"/><path d="M135 110 Q139 105 143 110 L141 120 L137 120Z" fill="#3A8028"/><ellipse cx="154" cy="120" rx="11" ry="7" fill="#C06040" opacity=".9"/><rect x="60" y="154" width="120" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Northern Thai Cuisine</text></svg></div>
+  <div class="card-body"><div class="card-cat">Restaurant</div><div class="card-name">Khoei Chiang Mai</div><div class="card-meta">Daily 11am–10pm · Chang Phueak · Authentic Northern food, hang lay pork, jackfruit curry</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.8 (5,210)</span><button class="card-map-btn" onclick="openMap(this,'Khoei Chiang Mai, 14 Santitham Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="restaurant">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF5EE"/><rect x="0" y="115" width="240" height="65" fill="#D2EADA"/><ellipse cx="120" cy="148" rx="68" ry="14" fill="#BCE0C4" opacity=".4"/><ellipse cx="120" cy="132" rx="66" ry="26" fill="#E4E0C0"/><ellipse cx="120" cy="120" rx="66" ry="18" fill="#F2EED5"/><ellipse cx="120" cy="120" rx="58" ry="13" fill="#5C3810" opacity=".8"/><path d="M72 118 Q86 112 100 118 Q114 124 128 118 Q142 112 158 118" stroke="#8A5010" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="106" cy="114" rx="15" ry="10" fill="#F8E040" opacity=".85"/><ellipse cx="106" cy="113" rx="7" ry="6" fill="#F04808"/><path d="M136 110 Q141 105 146 110 L144 120 L138 120Z" fill="#3A8028"/><ellipse cx="156" cy="121" rx="12" ry="7" fill="#C06440" opacity=".9"/><rect x="62" y="154" width="116" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Pad Thai + Cocktails</text></svg></div>
+  <div class="card-body"><div class="card-cat">Restaurant</div><div class="card-name">Thai Food Good Taste</div><div class="card-meta">Daily 11:30am–11:30pm · Old City · Local crowd, great pad Thai, cocktails, good vibes</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.7 (556)</span><button class="card-map-btn" onclick="openMap(this,'Thai Food Good Taste, Rachadamnoen Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="restaurant">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EDF7F2"/><rect x="0" y="115" width="240" height="65" fill="#D8EEE0"/><ellipse cx="120" cy="148" rx="68" ry="14" fill="#C0DEC8" opacity=".5"/><ellipse cx="120" cy="132" rx="66" ry="26" fill="#E0D8B5"/><ellipse cx="120" cy="120" rx="66" ry="18" fill="#EDE8CC"/><ellipse cx="120" cy="120" rx="58" ry="13" fill="#7A3010" opacity=".8"/><path d="M74 118 Q88 112 102 118 Q116 124 130 118 Q144 112 160 118" stroke="#A05020" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="98" cy="115" rx="13" ry="9" fill="#D08020" opacity=".9"/><ellipse cx="128" cy="113" rx="14" ry="9" fill="#B05820" opacity=".9"/><path d="M142 110 Q147 105 152 110 L150 120 L144 120Z" fill="#3A8028"/><path d="M168 118 Q177 110 185 118 Q177 128 168 118Z" fill="#5AB040"/><rect x="60" y="154" width="120" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Hang Lay Pork Curry</text></svg></div>
+  <div class="card-body"><div class="card-cat">Restaurant</div><div class="card-name">Mr. KAI</div><div class="card-meta">Tue–Sun 9am–9pm · Old City · Huge portions, cheap prices, the best Khao Soi in Old City</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.7 (2,313)</span><button class="card-map-btn" onclick="openMap(this,'Mr KAI Restaurant, 11 Jhaban Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="restaurant">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF6EE"/><rect x="0" y="115" width="240" height="65" fill="#D0EAD5"/><ellipse cx="120" cy="148" rx="70" ry="14" fill="#B8D8C0" opacity=".5"/><ellipse cx="120" cy="130" rx="68" ry="26" fill="#3A2010" opacity=".7"/><ellipse cx="120" cy="118" rx="68" ry="18" fill="#4A2818" opacity=".8"/><path d="M70 116 Q84 110 98 116 Q112 122 126 116 Q140 110 158 116" stroke="#6A3808" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M72 123 Q86 117 100 123 Q114 129 128 123 Q142 117 160 123" stroke="#5A2808" stroke-width="3.5" fill="none" stroke-linecap="round"/><ellipse cx="94" cy="114" rx="15" ry="10" fill="#F8D840" opacity=".9"/><ellipse cx="94" cy="113" rx="7" ry="7" fill="#F04808"/><path d="M136 110 Q140 105 144 110 L142 120 L138 120Z" fill="#3A8028"/><ellipse cx="156" cy="120" rx="11" ry="7" fill="#C07848" opacity=".9"/><rect x="60" y="154" width="120" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">River-Side Dining</text></svg></div>
+  <div class="card-body"><div class="card-cat">Restaurant</div><div class="card-name">Bodhi Terrace</div><div class="card-meta">Daily 6:30am–10pm · Ping River · Beautiful riverside setting, attentive staff, ask for Jane</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.7 (166)</span><button class="card-map-btn" onclick="openMap(this,'Bodhi Terrace, 123/1 Charoen Prathet Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="restaurant">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF6EF"/><rect x="0" y="115" width="240" height="65" fill="#D5EDDA"/><ellipse cx="120" cy="148" rx="68" ry="14" fill="#BCD8C4" opacity=".5"/><ellipse cx="120" cy="134" rx="66" ry="26" fill="#E8E0C0"/><ellipse cx="120" cy="122" rx="66" ry="18" fill="#F5EED8"/><ellipse cx="120" cy="122" rx="58" ry="13" fill="#8A4010" opacity=".75"/><ellipse cx="96" cy="118" rx="16" ry="11" fill="#C8A050" opacity=".9"/><ellipse cx="96" cy="116" rx="12" ry="8" fill="#D8B060"/><ellipse cx="130" cy="116" rx="18" ry="11" fill="#A05020" opacity=".9"/><path d="M78 122 Q94 116 110 122 Q126 128 142 122 Q150 118 157 122" stroke="#F8E0C0" stroke-width="2" fill="none" opacity=".6"/><ellipse cx="168" cy="130" rx="18" ry="12" fill="#EDE8D5"/><path d="M166 109 Q171 100 178 109 Q171 118 166 109Z" fill="#5AB040"/><rect x="60" y="154" width="120" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Massaman — Candle Lit</text></svg></div>
+  <div class="card-body"><div class="card-cat">Restaurant</div><div class="card-name">The Good View</div><div class="card-meta">Daily 5pm–1am · Ping River · Live music, river view, Thai & Western menu</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.3 (4,716)</span><button class="card-map-btn" onclick="openMap(this,'The Good View Bar Restaurant, 13 Charoen Rat Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<!-- ════ MASSAGE (10) ════ -->
+<div class="card" data-cat="massage">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF6EE"/><rect x="30" y="100" width="180" height="32" rx="5" fill="#C8E4CC"/><rect x="30" y="95" width="180" height="12" rx="5" fill="#D8EEDC"/><ellipse cx="120" cy="92" rx="75" ry="18" fill="#F5C8A0"/><ellipse cx="75" cy="90" rx="16" ry="14" fill="#F5C8A0"/><circle cx="60" cy="88" r="14" fill="#FAD0A8"/><ellipse cx="60" cy="82" rx="14" ry="8" fill="#1A0800"/><path d="M52 79 Q56 73 60 79 Q57 84 52 79Z" fill="#F090B8"/><path d="M58 76 Q62 70 66 76 Q63 81 58 76Z" fill="#E070A0"/><circle cx="62" cy="74" r="2.5" fill="#C8E870"/><ellipse cx="110" cy="86" rx="12" ry="8" fill="#D0A070" opacity=".9"/><ellipse cx="135" cy="84" rx="11" ry="7" fill="#D0A070" opacity=".9"/><rect x="196" y="88" width="22" height="36" rx="3" fill="#B0CC88"/><rect x="198" y="80" width="6" height="12" rx="1" fill="#E8F0D8"/><path d="M201 78 Q203 73 201 68 Q199 73 201 78Z" fill="#90C870"/><path d="M164 70 Q169 62 174 70 Q169 78 164 70Z" fill="#90C870" opacity=".8"/><path d="M171 64 Q176 56 181 64 Q176 72 171 64Z" fill="#6AAA50" opacity=".7"/><rect x="55" y="148" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="160" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Traditional Thai Massage</text></svg></div>
+  <div class="card-body"><div class="card-cat">Massage &amp; Spa</div><div class="card-name">Zira Spa</div><div class="card-meta">Daily 10am–10pm · Old City · Top-rated, 3,500+ reviews, luxury Thai massage</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.9 (3,524)</span><span class="badge-pick">Top Pick</span><button class="card-map-btn" onclick="openMap(this,'Zira Spa, 8 Ratvithi Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="massage">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF6EF"/><rect x="0" y="105" width="240" height="75" fill="#D5EDD9"/><ellipse cx="30" cy="90" rx="28" ry="45" fill="#4A9A5E" opacity=".35"/><ellipse cx="210" cy="95" rx="25" ry="40" fill="#4A9A5E" opacity=".35"/><ellipse cx="50" cy="70" rx="20" ry="32" fill="#6AAA70" opacity=".2"/><ellipse cx="120" cy="148" rx="36" ry="10" fill="#B0D8B8" opacity=".5"/><path d="M90 130 Q90 156 120 159 Q150 156 150 130 Q135 125 120 124 Q105 125 90 130Z" fill="#8A9A60" opacity=".8"/><path d="M92 130 Q92 153 120 156 Q148 153 148 130 Q133 126 120 125 Q107 126 92 130Z" fill="#9AAA68" opacity=".9"/><ellipse cx="120" cy="132" rx="26" ry="8" fill="#C8E8A0" opacity=".7"/><rect x="128" y="108" width="4" height="30" rx="2" fill="#D0E870"/><path d="M145 130 Q152 124 158 130 Q152 136 145 130Z" fill="#7AC840"/><path d="M68 100 Q73 93 78 100 Q73 107 68 100Z" fill="#90C870" opacity=".8"/><path d="M155 95 Q160 88 165 95 Q160 102 155 95Z" fill="#A8D880" opacity=".7"/><rect x="60" y="156" width="120" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="168" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Garden Aromatherapy</text></svg></div>
+  <div class="card-body"><div class="card-cat">Massage &amp; Spa</div><div class="card-name">Antique Massage</div><div class="card-meta">Daily 10am–10pm · Hai Ya · Garden setting, coconut water welcome, pickup service</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.9 (2,400)</span><button class="card-map-btn" onclick="openMap(this,'Antique Massage Chiangmai, 14 Nantaram Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="massage">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF5EE"/><rect x="20" y="95" width="200" height="36" rx="6" fill="#C8E4CC"/><rect x="20" y="90" width="200" height="12" rx="5" fill="#D8EED8"/><circle cx="90" cy="78" r="28" fill="#7AAA50" opacity=".8"/><circle cx="90" cy="75" r="24" fill="#88BA58" opacity=".9"/><path d="M68 70 Q90 62 112 70" stroke="#C0D870" stroke-width="2" fill="none" opacity=".6"/><path d="M66 76 Q90 68 114 76" stroke="#C0D870" stroke-width="2" fill="none" opacity=".5"/><path d="M85 48 Q88 40 85 32" stroke="#E8F0D8" stroke-width="2" fill="none" opacity=".5" stroke-linecap="round"/><path d="M92 44 Q95 36 92 28" stroke="#E8F0D8" stroke-width="2" fill="none" opacity=".4" stroke-linecap="round"/><circle cx="158" cy="80" r="24" fill="#6A9A40" opacity=".85"/><circle cx="158" cy="77" r="20" fill="#78A848" opacity=".9"/><path d="M138 73 Q158 65 178 73" stroke="#C0D870" stroke-width="2" fill="none" opacity=".5"/><ellipse cx="186" cy="98" rx="8" ry="4" fill="#4A8A28" opacity=".8"/><rect x="55" y="148" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="160" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Hot Herbal Compress</text></svg></div>
+  <div class="card-body"><div class="card-cat">Massage &amp; Spa</div><div class="card-name">The Home Massage</div><div class="card-meta">Daily 10am–10pm · Hai Ya · Warm beds, foot scrub included, cozy local feel</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.9 (3,291)</span><button class="card-map-btn" onclick="openMap(this,'The Home Massage and Spa, 17 Ragang Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="massage">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF6EF"/><path d="M45 130 Q45 162 120 165 Q195 162 195 130 Q160 122 120 120 Q80 122 45 130Z" fill="#C8E8D0"/><path d="M48 130 Q48 160 120 162 Q192 160 192 130 Q157 123 120 122 Q83 123 48 130Z" fill="#D5EDD8"/><path d="M75 138 Q80 132 85 138 Q80 144 75 138Z" fill="#90C870" opacity=".9"/><path d="M88 143 Q93 137 98 143 Q93 149 88 143Z" fill="#A8D880" opacity=".8"/><path d="M140 140 Q145 134 150 140 Q145 146 140 140Z" fill="#90C870" opacity=".85"/><path d="M155 144 Q160 138 165 144 Q160 150 155 144Z" fill="#A8D880" opacity=".8"/><circle cx="102" cy="135" r="2" fill="#E8F8EC" opacity=".8"/><circle cx="115" cy="138" r="1.5" fill="#E8F8EC" opacity=".7"/><circle cx="130" cy="134" r="2" fill="#E8F8EC" opacity=".8"/><path d="M110 60 L120 110" stroke="#4A9A5E" stroke-width="6" stroke-linecap="round"/><path d="M120 60 L120 110" stroke="#3A8A4E" stroke-width="5" stroke-linecap="round"/><path d="M130 62 L120 110" stroke="#4A9A5E" stroke-width="5" stroke-linecap="round"/><path d="M106 75 Q100 68 108 72 Q104 80 106 75Z" fill="#5AAA60"/><path d="M118 70 Q112 62 120 66 Q116 74 118 70Z" fill="#68B868"/><path d="M130 73 Q136 66 128 70 Q132 78 130 73Z" fill="#5AAA60"/><rect x="114" y="104" width="12" height="8" rx="2" fill="#4A9A5E"/><rect x="55" y="156" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="168" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Flower Foot Scrub</text></svg></div>
+  <div class="card-body"><div class="card-cat">Massage &amp; Spa</div><div class="card-name">ChabaPrai Spa</div><div class="card-meta">Daily 11am–10pm · Old City · VIP flower foot scrub ritual, book ahead</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.9 (1,277)</span><button class="card-map-btn" onclick="openMap(this,'ChabaPrai Spa, 95 Intha Warorot Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="massage">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF6EF"/><rect x="20" y="95" width="200" height="36" rx="6" fill="#C5E2CA"/><rect x="20" y="90" width="200" height="12" rx="5" fill="#D2EDD5"/><ellipse cx="95" cy="75" rx="34" ry="25" fill="#B8D8C8" opacity=".7"/><ellipse cx="95" cy="72" rx="30" ry="21" fill="#C8E8D8" opacity=".8"/><path d="M64 70 Q80 60 96 66 Q112 60 128 70" stroke="#90C890" stroke-width="2" fill="none" opacity=".5"/><path d="M160" cy="80" r="0"/><ellipse cx="158" cy="75" rx="30" ry="22" fill="#A8CCA8" opacity=".7"/><ellipse cx="158" cy="72" rx="26" ry="18" fill="#B8DDB8" opacity=".8"/><path d="M132 70 Q145 62 158 66 Q171 62 184 70" stroke="#80B880" stroke-width="2" fill="none" opacity=".5"/><path d="M85 55 Q88 47 85 38" stroke="#E8F8EC" stroke-width="2" fill="none" opacity=".4" stroke-linecap="round"/><path d="M152 52 Q155 44 152 36" stroke="#E8F8EC" stroke-width="2" fill="none" opacity=".4" stroke-linecap="round"/><rect x="55" y="148" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="160" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Oil Aromatherapy</text></svg></div>
+  <div class="card-body"><div class="card-cat">Massage &amp; Spa</div><div class="card-name">Zenza Massage &amp; Spa</div><div class="card-meta">Daily 10am–11pm · Old City · Complimentary tea, gentle oil massage, good English</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.8 (1,318)</span><button class="card-map-btn" onclick="openMap(this,'Zenza Massage Spa, 80 Rachadamnoen Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<!-- ════ DESSERT (10) ════ -->
+<div class="card" data-cat="dessert">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF6EE"/><rect x="0" y="120" width="240" height="60" fill="#D5EDD9"/><path d="M88 50 Q85 145 92 155 Q120 162 148 155 Q155 145 152 50Z" fill="#C8E8D0" opacity=".2"/><path d="M90 53 Q87 143 94 153 Q120 160 146 153 Q153 143 150 53Z" fill="none" stroke="#B0D8B8" stroke-width="1.5" opacity=".5"/><rect x="100" y="115" width="18" height="15" rx="3" fill="#C8E8D0" opacity=".8" transform="rotate(-15 109 127)"/><rect x="120" y="110" width="15" height="12" rx="3" fill="#D8F0D8" opacity=".7" transform="rotate(10 127 121)"/><rect x="91" y="138" width="58" height="20" rx="2" fill="#3A1A08"/><rect x="91" y="108" width="58" height="32" rx="2" fill="#A07050" opacity=".7"/><rect x="91" y="85" width="58" height="25" rx="2" fill="#201008" opacity=".85"/><path d="M90 85 Q95 75 105 79 Q110 67 120 72 Q130 65 135 75 Q145 71 150 81 Q155 77 152 85Z" fill="#FFFFFF" opacity=".95"/><path d="M105 79 Q108 87 112 82 Q115 90 119 85 Q122 93 126 87 Q130 95 135 89" stroke="#3A1A08" stroke-width="2" fill="none"/><rect x="138" y="38" width="5" height="118" rx="2" fill="#C8E870" opacity=".9"/><rect x="58" y="153" width="124" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="165" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Artisan Iced Mocha</text></svg></div>
+  <div class="card-body"><div class="card-cat">Dessert</div><div class="card-name">Khom Chocolate House</div><div class="card-meta">Daily 10am–6pm · Old City · Local artisan chocolate, iced mocha, postcards &amp; art</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.9 (637)</span><span class="badge-pick">Top Pick</span><button class="card-map-btn" onclick="openMap(this,'Khom Chocolate House, 24/2 Ratchamanka Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="dessert">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF6EF"/><rect x="0" y="120" width="240" height="60" fill="#D5EDD9"/><path d="M55 130 Q55 162 120 165 Q185 162 185 130 Q150 122 120 120 Q90 122 55 130Z" fill="#C5E2CA"/><path d="M68 128 Q80 95 120 80 Q160 95 172 128Z" fill="#FFFFFF" opacity=".95"/><path d="M90 100 Q100 110 110 105 Q118 112 125 108 Q133 115 140 110" stroke="#4A9A5E" stroke-width="4" fill="none" opacity=".7" stroke-linecap="round"/><path d="M85 112 Q95 120 108 116 Q116 123 124 119 Q132 126 145 120" stroke="#7A5020" stroke-width="3" fill="none" opacity=".8" stroke-linecap="round"/><circle cx="96" cy="118" r="5" fill="#F5DEB3" opacity=".9"/><circle cx="108" cy="122" r="5" fill="#F0D090" opacity=".9"/><circle cx="120" cy="120" r="5" fill="#F5DEB3" opacity=".9"/><circle cx="132" cy="123" r="5" fill="#F0D090" opacity=".9"/><circle cx="144" cy="119" r="5" fill="#F5DEB3" opacity=".9"/><rect x="102" y="110" width="4" height="12" rx="2" fill="#2A2A2A" opacity=".7"/><rect x="130" y="111" width="4" height="11" rx="2" fill="#2A2A2A" opacity=".7"/><circle cx="90" cy="123" r="4" fill="#E04060" opacity=".85"/><circle cx="150" cy="122" r="4" fill="#E04060" opacity=".85"/><rect x="58" y="155" width="124" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="167" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Thai Shaved Ice</text></svg></div>
+  <div class="card-body"><div class="card-cat">Dessert</div><div class="card-name">Samlan Thai Desserts</div><div class="card-meta">Daily 3–11pm · Phra Singh · Shaved ice, sago, pandan syrup — pure local vibes</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.8 (571)</span><button class="card-map-btn" onclick="openMap(this,'Samlan Thai Desserts, 6 Samlarn Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="dessert">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF6EE"/><rect x="0" y="120" width="240" height="60" fill="#D0EAD5"/><ellipse cx="120" cy="142" rx="66" ry="9" fill="#B8D8C0"/><rect x="62" y="120" width="116" height="22" rx="2" fill="#2A2010"/><rect x="62" y="98" width="116" height="24" rx="2" fill="#F8E8A0"/><ellipse cx="85" cy="110" rx="10" ry="7" fill="#F8D040"/><ellipse cx="85" cy="108" rx="8" ry="5" fill="#FFE060"/><ellipse cx="110" cy="112" rx="10" ry="7" fill="#F8D040"/><ellipse cx="135" cy="110" rx="10" ry="7" fill="#F8D040"/><ellipse cx="158" cy="112" rx="9" ry="6" fill="#F8D040"/><path d="M62 98 Q75 84 90 90 Q100 78 115 84 Q125 72 140 78 Q150 68 165 74 Q178 66 178 98Z" fill="white" opacity=".95"/><path d="M80 86 Q90 94 100 88 Q108 96 118 90 Q126 98 138 91 Q146 99 155 93" stroke="#8A6020" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="170" cy="76" r="12" fill="#D07010" opacity=".8"/><circle cx="170" cy="76" r="9" fill="#E08020"/><path d="M164 71 L168 81" stroke="#1A0800" stroke-width="2"/><path d="M170 70 L170 82" stroke="#1A0800" stroke-width="2"/><path d="M176 71 L172 81" stroke="#1A0800" stroke-width="2"/><rect x="58" y="153" width="124" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="165" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Banoffee Cake</text></svg></div>
+  <div class="card-body"><div class="card-cat">Dessert / Café</div><div class="card-name">TORA BAKE</div><div class="card-meta">Daily 9am–6pm · Chang Phueak · Hidden alley bakery, banoffee cake to die for</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.9 (158)</span><button class="card-map-btn" onclick="openMap(this,'TORA BAKE, Chang Phueak, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="dessert">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF6EF"/><rect x="0" y="120" width="240" height="60" fill="#D2EDD6"/><path d="M95 110 L120 168 L145 110Z" fill="#B89840"/><path d="M97 110 L120 165 L143 110Z" fill="#C8A850"/><path d="M100 115 L137 115" stroke="#A88030" stroke-width="1" opacity=".7"/><path d="M98 122 L142 122" stroke="#A88030" stroke-width="1" opacity=".7"/><path d="M97 130 L143 130" stroke="#A88030" stroke-width="1" opacity=".7"/><path d="M110 111 L118 163" stroke="#A88030" stroke-width="1" opacity=".5"/><path d="M120 110 L120 166" stroke="#A88030" stroke-width="1" opacity=".5"/><path d="M130 111 L122 163" stroke="#A88030" stroke-width="1" opacity=".5"/><circle cx="120" cy="90" r="38" fill="#1A8A40"/><circle cx="120" cy="86" r="34" fill="#28A050"/><path d="M98 82 Q108 75 118 82 Q110 90 98 82Z" fill="#50C870" opacity=".5"/><ellipse cx="105" cy="88" rx="5" ry="3" fill="#1A0A05" opacity=".9" transform="rotate(-20 105 88)"/><ellipse cx="120" cy="82" rx="5" ry="3" fill="#1A0A05" opacity=".9" transform="rotate(15 120 82)"/><ellipse cx="135" cy="90" rx="5" ry="3" fill="#1A0A05" opacity=".9" transform="rotate(-10 135 90)"/><circle cx="106" cy="78" r="6" fill="white" opacity=".2"/><path d="M118 54 Q124 46 130 54 Q124 62 118 54Z" fill="#1A7A38"/><rect x="62" y="155" width="116" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="167" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Mint Choc Ice Cream</text></svg></div>
+  <div class="card-body"><div class="card-cat">Dessert</div><div class="card-name">MINTNIMAL</div><div class="card-meta">Daily 10am–6pm · Old City · Signature mint choc ice cream, cute local spot</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.8 (385)</span><button class="card-map-btn" onclick="openMap(this,'MINTNIMAL, 65 Prapokklao Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="dessert">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF7F0"/><rect x="0" y="118" width="240" height="62" fill="#D5EDD9"/><ellipse cx="120" cy="148" rx="65" ry="13" fill="#C0E0C8" opacity=".5"/><ellipse cx="120" cy="136" rx="62" ry="24" fill="#F5F0E0"/><ellipse cx="120" cy="124" rx="62" ry="16" fill="#FFFAEC"/><path d="M60 124 Q78 118 96 124 Q114 130 132 124 Q150 118 180 124" stroke="#E8D080" stroke-width="2.5" fill="none" opacity=".6"/><ellipse cx="90" cy="120" rx="12" ry="8" fill="#F0D840" opacity=".85"/><ellipse cx="110" cy="118" rx="10" ry="7" fill="#D8C040" opacity=".8"/><ellipse cx="130" cy="120" rx="11" ry="8" fill="#E8D040" opacity=".85"/><ellipse cx="150" cy="118" rx="10" ry="7" fill="#D0C038" opacity=".8"/><path d="M70 116 Q84 110 98 116" stroke="#E8C048" stroke-width="2" fill="none" opacity=".4"/><path d="M62 148 L62 135" stroke="#C8E870" stroke-width="3" stroke-linecap="round"/><path d="M80 148 L80 138" stroke="#A0C860" stroke-width="2.5" stroke-linecap="round"/><path d="M96 148 L96 136" stroke="#C8E870" stroke-width="3" stroke-linecap="round"/><rect x="58" y="154" width="124" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Mango Sticky Rice</text></svg></div>
+  <div class="card-body"><div class="card-cat">Café / Dessert</div><div class="card-name">Sweet Home Coffee</div><div class="card-meta">Mon–Sat 8am–5pm · Old City · Best mango sticky rice in CM, tiny gem, go early</div><div class="card-footer"><span class="rating"><span class="star">★</span> 5.0 (1,007)</span><button class="card-map-btn" onclick="openMap(this,'Sweet Home Coffee, 1 Ratchamanka Rd Soi 7, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="dessert">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF6EE"/><rect x="0" y="115" width="240" height="65" fill="#D0EAD4"/><ellipse cx="120" cy="148" rx="65" ry="13" fill="#BCE0C4" opacity=".5"/><ellipse cx="120" cy="136" rx="62" ry="24" fill="#F8F4E8"/><ellipse cx="120" cy="124" rx="62" ry="16" fill="#FFFCF4"/><rect x="62" y="76" width="116" height="50" rx="8" fill="#F8F4E8" opacity=".6"/><rect x="65" y="79" width="110" height="44" rx="6" fill="none" stroke="#D0E8C0" stroke-width="1"/><ellipse cx="100" cy="100" rx="18" ry="14" fill="#F8B030" opacity=".8"/><ellipse cx="100" cy="97" rx="14" ry="10" fill="#FFC040" opacity=".9"/><ellipse cx="140" cy="98" rx="16" ry="12" fill="#90C048" opacity=".7"/><ellipse cx="140" cy="95" rx="12" ry="8" fill="#A8D050" opacity=".8"/><circle cx="120" cy="90" r="8" fill="#E83028" opacity=".75"/><circle cx="120" cy="88" r="5" fill="#F04030" opacity=".8"/><path d="M90 110 Q100 104 110 108 Q118 114 126 110 Q134 104 144 108" stroke="#C0D870" stroke-width="2" fill="none" opacity=".4"/><rect x="60" y="153" width="120" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="165" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Fine Pastry Art</text></svg></div>
+  <div class="card-body"><div class="card-cat">Dessert</div><div class="card-name">Saruda Finest Pastry</div><div class="card-meta">Daily 10am–10pm · Nimman · Show-stopping pastry art, parisian chocolate, must try</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.5 (946)</span><button class="card-map-btn" onclick="openMap(this,'Saruda Finest Pastry, Huay Kaew Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="dessert">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF6EF"/><rect x="0" y="115" width="240" height="65" fill="#D5EDD9"/><ellipse cx="120" cy="148" rx="65" ry="13" fill="#BCE0C4" opacity=".5"/><rect x="55" y="60" width="130" height="82" rx="10" fill="#F8F4E8"/><rect x="58" y="63" width="124" height="76" rx="8" fill="none" stroke="#C8E0C0" stroke-width="1"/><rect x="62" y="67" width="116" height="28" rx="6" fill="#F0E0C0"/><path d="M64 90 Q95 82 128 90 Q120 98 64 90Z" fill="#D0C090" opacity=".6"/><rect x="62" y="97" width="116" height="28" rx="6" fill="#E8C870" opacity=".8"/><rect x="65" y="100" width="110" height="22" rx="4" fill="#F0D870" opacity=".9"/><path d="M68 103 Q86 98 104 103 Q122 108 140 103 Q158 98 173 103" stroke="#C8A050" stroke-width="2" fill="none" opacity=".5"/><circle cx="78" cy="82" r="8" fill="#E0C060" opacity=".8"/><circle cx="100" cy="80" r="7" fill="#D0B050" opacity=".8"/><circle cx="122" cy="82" r="7" fill="#E0C060" opacity=".8"/><circle cx="144" cy="80" r="8" fill="#D0B050" opacity=".8"/><text x="120" y="135" font-family="DM Sans,sans-serif" font-size="9" fill="#5A4020" text-anchor="middle" font-weight="600">Sunday Baker</text><rect x="58" y="153" width="124" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="165" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Scones + Almond Croissant</text></svg></div>
+  <div class="card-body"><div class="card-cat">Bakery / Café</div><div class="card-name">Sunday Baker</div><div class="card-meta">Tue–Sun 7:30am–5pm · Old City · French toast, almond croissant, sunny outdoor terrace</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.5 (579)</span><button class="card-map-btn" onclick="openMap(this,'Sunday Baker, 35 Bumrung Buri Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="dessert">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF5EE"/><rect x="0" y="115" width="240" height="65" fill="#D0EAD4"/><ellipse cx="120" cy="148" rx="65" ry="13" fill="#BCE0C4" opacity=".5"/><rect x="62" y="60" width="116" height="86" rx="8" fill="#F8F4EC"/><rect x="62" y="60" width="116" height="86" rx="8" fill="none" stroke="#C8E0C0" stroke-width="1"/><ellipse cx="120" cy="88" rx="38" ry="25" fill="#E8C070" opacity=".8"/><ellipse cx="120" cy="85" rx="33" ry="20" fill="#F0D070" opacity=".9"/><path d="M84 85 Q96 78 108 85 Q120 78 132 85 Q144 78 156 85" stroke="#C8A040" stroke-width="1.5" fill="none" opacity=".5"/><path d="M84 92 Q96 85 108 92 Q120 85 132 92 Q144 85 156 92" stroke="#C8A040" stroke-width="1.5" fill="none" opacity=".4"/><path d="M96 80 L96 105" stroke="#A88030" stroke-width="1.5" opacity=".3"/><path d="M120 78 L120 106" stroke="#A88030" stroke-width="1.5" opacity=".3"/><path d="M144 80 L144 105" stroke="#A88030" stroke-width="1.5" opacity=".3"/><path d="M88 104 Q103 98 118 103 Q133 108 148 103" stroke="#90D870" stroke-width="2.5" fill="none" opacity=".6" stroke-linecap="round"/><circle cx="96" cy="112" r="5" fill="#E8E840" opacity=".85"/><circle cx="120" cy="114" r="5" fill="#F0D030" opacity=".85"/><circle cx="144" cy="112" r="5" fill="#E8E840" opacity=".85"/><rect x="60" y="153" width="120" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="165" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Bagel + Apple Crumble</text></svg></div>
+  <div class="card-body"><div class="card-cat">Café / Brunch</div><div class="card-name">Winglet Brunch</div><div class="card-meta">Daily 7:30am–4:30pm · Old City · Cozy tiny café, great bagels, apple crumble, 600mbps wifi</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.9 (222)</span><button class="card-map-btn" onclick="openMap(this,'Winglet Cafe, 24 Singharat Soi 3, Chiang Mai')">📍</button></div></div>
+</div>
+
+<!-- ════ TENNIS (10) ════ -->
+<div class="card" data-cat="tennis">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF5EE"/><rect x="10" y="45" width="220" height="110" rx="4" fill="#A8C8E8"/><rect x="20" y="55" width="200" height="90" fill="none" stroke="white" stroke-width="2" opacity=".85"/><line x1="20" y1="100" x2="220" y2="100" stroke="white" stroke-width="1.5" opacity=".85"/><line x1="120" y1="55" x2="120" y2="145" stroke="white" stroke-width="1.5" opacity=".8"/><line x1="58" y1="100" x2="58" y2="145" stroke="white" stroke-width="1.2" opacity=".7"/><line x1="182" y1="100" x2="182" y2="145" stroke="white" stroke-width="1.2" opacity=".7"/><line x1="58" y1="55" x2="58" y2="100" stroke="white" stroke-width="1.2" opacity=".7"/><line x1="182" y1="55" x2="182" y2="100" stroke="white" stroke-width="1.2" opacity=".7"/><rect x="118" y="93" width="4" height="16" rx="1" fill="#D8D0B0"/><line x1="20" y1="100" x2="220" y2="100" stroke="white" stroke-width="2.5" opacity=".5"/><circle cx="80" cy="80" r="10" fill="#FAC490"/><ellipse cx="80" cy="75" rx="10" ry="6" fill="#1A0800"/><rect x="73" y="89" width="14" height="20" rx="3" fill="#2D6A3F"/><path d="M73 93 Q62 103 56 110" stroke="#FAC490" stroke-width="6" stroke-linecap="round" fill="none"/><ellipse cx="52" cy="115" rx="12" ry="15" fill="none" stroke="#C8E048" stroke-width="2.5"/><rect x="50" y="130" width="4" height="14" rx="2" fill="#A0B030"/><circle cx="155" cy="73" r="9" fill="#C8E030"/><path d="M148 70 Q155 66 162 70" stroke="white" stroke-width="1.2" fill="none"/><path d="M185 58 L187 53 L189 58 L194 60 L189 62 L187 67 L185 62 L180 60Z" fill="#C8E870"/><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Coach Thor — Best in CM</text></svg></div>
+  <div class="card-body"><div class="card-cat">Tennis Coach</div><div class="card-name">Coach Thor</div><div class="card-meta">Daily 7am–8pm · Chang Moi · 379 reviews — mental game, technique, instant results</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.9 (379)</span><span class="badge-pick">Top Pick</span><button class="card-map-btn" onclick="openMap(this,'Thor Tennis Coach, Chang Moi, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="tennis">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF5EE"/><rect x="10" y="40" width="220" height="125" rx="4" fill="#1848A8"/><rect x="20" y="50" width="200" height="105" fill="none" stroke="white" stroke-width="2" opacity=".85"/><line x1="20" y1="102" x2="220" y2="102" stroke="white" stroke-width="1.5" opacity=".85"/><line x1="120" y1="50" x2="120" y2="155" stroke="white" stroke-width="1.5" opacity=".8"/><line x1="58" y1="102" x2="58" y2="155" stroke="white" stroke-width="1.2" opacity=".7"/><line x1="182" y1="102" x2="182" y2="155" stroke="white" stroke-width="1.2" opacity=".7"/><rect x="118" y="95" width="4" height="16" rx="1" fill="#D0C8B0"/><line x1="20" y1="102" x2="220" y2="102" stroke="white" stroke-width="2.5" opacity=".5"/><circle cx="155" cy="72" r="14" fill="#B8E020"/><path d="M144 65 Q155 60 166 65" stroke="white" stroke-width="1.5" fill="none"/><ellipse cx="80" cy="70" rx="22" ry="27" fill="none" stroke="#A8E050" stroke-width="3"/><line x1="59" y1="60" x2="101" y2="60" stroke="#A8E050" stroke-width="1.2" opacity=".6"/><line x1="59" y1="67" x2="101" y2="67" stroke="#A8E050" stroke-width="1.2" opacity=".6"/><line x1="60" y1="74" x2="100" y2="74" stroke="#A8E050" stroke-width="1.2" opacity=".6"/><line x1="70" y1="44" x2="70" y2="98" stroke="#A8E050" stroke-width="1.2" opacity=".5"/><line x1="80" y1="43" x2="80" y2="98" stroke="#A8E050" stroke-width="1.2" opacity=".5"/><line x1="90" y1="44" x2="90" y2="98" stroke="#A8E050" stroke-width="1.2" opacity=".5"/><rect x="76" y="98" width="8" height="28" rx="3" fill="#A0B830"/><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Hard Courts — New</text></svg></div>
+  <div class="card-body"><div class="card-cat">Tennis</div><div class="card-name">Cross Court Club</div><div class="card-meta">Daily 7am–10pm · Chang Phueak · Brand new hard courts, online booking, rackets &amp; balls</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.9 (20)</span><button class="card-map-btn" onclick="openMap(this,'Cross Court Club, 51 Chang Phueak 5, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="tennis">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF6EF"/><rect x="10" y="40" width="220" height="125" rx="4" fill="#B04018"/><path d="M10 60 Q120 55 230 60" stroke="#C04820" stroke-width="1" opacity=".4"/><path d="M10 80 Q120 75 230 80" stroke="#C04820" stroke-width="1" opacity=".4"/><path d="M10 100 Q120 95 230 100" stroke="#C04820" stroke-width="1" opacity=".4"/><path d="M10 120 Q120 115 230 120" stroke="#C04820" stroke-width="1" opacity=".4"/><rect x="20" y="50" width="200" height="105" fill="none" stroke="white" stroke-width="2" opacity=".7"/><line x1="20" y1="102" x2="220" y2="102" stroke="white" stroke-width="2.5" opacity=".6"/><line x1="120" y1="50" x2="120" y2="155" stroke="white" stroke-width="1.5" opacity=".7"/><circle cx="75" cy="70" r="10" fill="#FAC490"/><rect x="68" y="79" width="14" height="20" rx="3" fill="#2D6A3F"/><path d="M68 83 Q60 90 55 96" stroke="#FAC490" stroke-width="5" stroke-linecap="round"/><ellipse cx="100" cy="80" rx="10" ry="13" fill="none" stroke="#A8E050" stroke-width="2.2"/><circle cx="130" cy="90" r="8" fill="#D0E020"/><path d="M124 87 Q130 84 136 87" stroke="white" stroke-width="1" fill="none"/><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Clay Courts + Buffet</text></svg></div>
+  <div class="card-body"><div class="card-cat">Tennis</div><div class="card-name">Panij Tennis Court</div><div class="card-meta">Daily 6am–10pm · Wat Ket · 4 courts, daily buffet sessions, great local community</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.7 (40)</span><button class="card-map-btn" onclick="openMap(this,'Panij Tennis Court, Wat Ket, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="tennis">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF6EE"/><rect x="10" y="45" width="220" height="110" rx="4" fill="#1A6028"/><path d="M10 65 Q120 60 230 65" stroke="#207030" stroke-width="1" opacity=".5"/><path d="M10 85 Q120 80 230 85" stroke="#207030" stroke-width="1" opacity=".5"/><path d="M10 105 Q120 100 230 105" stroke="#207030" stroke-width="1" opacity=".5"/><rect x="20" y="55" width="200" height="90" fill="none" stroke="white" stroke-width="2" opacity=".7"/><line x1="20" y1="100" x2="220" y2="100" stroke="white" stroke-width="2.5" opacity=".7"/><line x1="120" y1="55" x2="120" y2="145" stroke="white" stroke-width="1.5" opacity=".6"/><line x1="60" y1="100" x2="60" y2="145" stroke="white" stroke-width="1.2" opacity=".5"/><line x1="180" y1="100" x2="180" y2="145" stroke="white" stroke-width="1.2" opacity=".5"/><circle cx="170" cy="75" r="10" fill="#FAD0A0"/><ellipse cx="170" cy="69" rx="10" ry="6" fill="#1A0800"/><rect x="163" y="84" width="14" height="20" rx="3" fill="#2D6A3F"/><path d="M163 88 Q155 95 150 102" stroke="#FAD0A0" stroke-width="6" stroke-linecap="round"/><ellipse cx="146" cy="107" rx="11" ry="14" fill="none" stroke="#A8E050" stroke-width="2.5"/><path d="M0 45 Q30 18 60 45" fill="#0A2A14" opacity=".6"/><path d="M180 45 Q210 18 240 45" fill="#0A2A14" opacity=".6"/><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Mountain Courts</text></svg></div>
+  <div class="card-body"><div class="card-cat">Tennis</div><div class="card-name">Nut Tennis Court</div><div class="card-meta">Daily 6am–8pm · Mae Rim · Coach Ton, local price, courts with mountain backdrop</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.9 (21)</span><button class="card-map-btn" onclick="openMap(this,'Nut Tennis Court, Don Kaeo, Mae Rim, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="tennis">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF5EE"/><rect x="10" y="35" width="220" height="128" rx="4" fill="#1445A8"/><rect x="20" y="45" width="200" height="108" fill="none" stroke="#70B0F0" stroke-width="2" opacity=".6"/><rect x="20" y="45" width="8" height="108" fill="#70B0F0" opacity=".15"/><rect x="212" y="45" width="8" height="108" fill="#70B0F0" opacity=".15"/><line x1="28" y1="99" x2="212" y2="99" stroke="white" stroke-width="2" opacity=".8"/><line x1="120" y1="45" x2="120" y2="153" stroke="white" stroke-width="1.5" opacity=".6"/><line x1="28" y1="99" x2="212" y2="99" stroke="white" stroke-width="3" opacity=".7"/><rect x="52" y="60" width="22" height="30" rx="8" fill="none" stroke="#A8E050" stroke-width="2.5"/><rect x="61" y="90" width="4" height="18" rx="2" fill="#80A030"/><circle cx="150" cy="72" r="11" fill="#C8E820"/><path d="M141 67 Q150 62 159 67" stroke="white" stroke-width="1.5" fill="none"/><path d="M141 77 Q150 82 159 77" stroke="white" stroke-width="1.5" fill="none"/><path d="M194 48 L196 43 L198 48 L203 50 L198 52 L196 57 L194 52 L189 50Z" fill="#C8E870" opacity=".9"/><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Padel — Glass Courts</text></svg></div>
+  <div class="card-body"><div class="card-cat">Padel</div><div class="card-name">Lanna Padel</div><div class="card-meta">Daily 8am–10pm · Tha Sala · Brand new glass padel courts, great community vibe</div><div class="card-footer"><span class="rating"><span class="star">★</span> 5.0 (114)</span><button class="card-map-btn" onclick="openMap(this,'Lanna Padel, Tha Sala, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="tennis">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF6EF"/><rect x="10" y="38" width="220" height="126" rx="4" fill="#1445A8"/><rect x="20" y="48" width="200" height="106" fill="none" stroke="#70B0F0" stroke-width="2" opacity=".6"/><rect x="20" y="48" width="8" height="106" fill="#70B0F0" opacity=".15"/><rect x="212" y="48" width="8" height="106" fill="#70B0F0" opacity=".15"/><line x1="28" y1="101" x2="212" y2="101" stroke="white" stroke-width="2.5" opacity=".7"/><line x1="120" y1="48" x2="120" y2="154" stroke="white" stroke-width="1.5" opacity=".6"/><path d="M60 75 Q100 50 140 75 Q180 50 210 75" stroke="#F8E040" stroke-width="2" fill="none" opacity=".4"/><circle cx="155" cy="72" r="11" fill="#D0E820"/><path d="M146 67 Q155 62 164 67" stroke="white" stroke-width="1.5" fill="none"/><rect x="52" y="62" width="22" height="30" rx="8" fill="none" stroke="#A8E050" stroke-width="2.5"/><rect x="61" y="92" width="4" height="18" rx="2" fill="#80A030"/><text x="120" y="136" font-family="DM Sans,sans-serif" font-size="10" fill="white" text-anchor="middle" opacity=".8">PADEL.CNX</text><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Padel CNX — Sakura Trees</text></svg></div>
+  <div class="card-body"><div class="card-cat">Padel</div><div class="card-name">PADEL.CNX</div><div class="card-meta">Daily 8am–10pm · Chang Phueak · New courts, sakura trees, friendly staff, WhatsApp community</div><div class="card-footer"><span class="rating"><span class="star">★</span> 5.0 (17)</span><button class="card-map-btn" onclick="openMap(this,'PADEL.CNX, 79 Thanon Changhuak, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="tennis">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF6EE"/><rect x="10" y="40" width="220" height="125" rx="4" fill="#1445A8"/><rect x="20" y="50" width="200" height="105" fill="none" stroke="#70B0F0" stroke-width="2" opacity=".6"/><rect x="20" y="50" width="8" height="105" fill="#70B0F0" opacity=".15"/><rect x="212" y="50" width="8" height="105" fill="#70B0F0" opacity=".15"/><line x1="28" y1="102" x2="212" y2="102" stroke="white" stroke-width="2.5" opacity=".7"/><line x1="120" y1="50" x2="120" y2="155" stroke="white" stroke-width="1.5" opacity=".6"/><text x="120" y="88" font-family="DM Sans,sans-serif" font-size="11" fill="white" text-anchor="middle" opacity=".7" font-weight="500">Padel Club</text><text x="120" y="102" font-family="DM Sans,sans-serif" font-size="10" fill="white" text-anchor="middle" opacity=".5">Chiang Mai</text><rect x="52" y="62" width="22" height="28" rx="8" fill="none" stroke="#A8E050" stroke-width="2.5"/><rect x="61" y="90" width="4" height="16" rx="2" fill="#80A030"/><circle cx="155" cy="70" r="11" fill="#C8E020"/><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">4 Indoor Courts</text></svg></div>
+  <div class="card-body"><div class="card-cat">Padel</div><div class="card-name">Padel Club Chiang Mai</div><div class="card-meta">Daily 8am–10pm · Saraphi · 4 indoor courts, good airflow, book via Playtomic</div><div class="card-footer"><span class="rating"><span class="star">★</span> 5.0 (62)</span><button class="card-map-btn" onclick="openMap(this,'Padel Club Chiang Mai, Saraphi, Chiang Mai')">📍</button></div></div>
+</div>
+
+<!-- ════ MARKETS (10) ════ -->
+<div class="card" data-cat="market">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF5EE"/><rect x="0" y="95" width="240" height="85" fill="#D8EEDC"/><path d="M0 52 L240 52 L240 66 L0 66Z" fill="#C03018"/><path d="M0 66 Q15 76 30 66 Q45 76 60 66 Q75 76 90 66 Q105 76 120 66 Q135 76 150 66 Q165 76 180 66 Q195 76 210 66 Q225 76 240 66" fill="#A82010"/><circle cx="20" cy="55" r="3" fill="#C8E870" opacity=".8"/><circle cx="50" cy="55" r="3" fill="#A8D060" opacity=".8"/><circle cx="80" cy="55" r="3" fill="#C8E870" opacity=".8"/><circle cx="110" cy="55" r="3" fill="#E0F080" opacity=".8"/><circle cx="140" cy="55" r="3" fill="#C8E870" opacity=".8"/><circle cx="170" cy="55" r="3" fill="#A8D060" opacity=".8"/><circle cx="200" cy="55" r="3" fill="#C8E870" opacity=".8"/><circle cx="230" cy="55" r="3" fill="#E0F080" opacity=".8"/><rect x="10" y="91" width="220" height="14" rx="2" fill="#4A2010"/><ellipse cx="55" cy="88" rx="22" ry="12" fill="#C49040" opacity=".9"/><ellipse cx="55" cy="84" rx="22" ry="8" fill="#D4A050" opacity=".9"/><rect x="34" y="68" width="42" height="16" rx="3" fill="#C8E870"/><text x="55" y="79" font-family="DM Sans,sans-serif" font-size="9" fill="#1A0A00" text-anchor="middle" font-weight="700">40 ฿</text><ellipse cx="120" cy="86" rx="22" ry="10" fill="#E8C840" opacity=".9"/><ellipse cx="125" cy="83" rx="10" ry="5" fill="#D8B020" opacity=".9"/><rect x="99" y="68" width="42" height="16" rx="3" fill="#C8E870"/><text x="120" y="79" font-family="DM Sans,sans-serif" font-size="9" fill="#1A0A00" text-anchor="middle" font-weight="700">50 ฿</text><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Local Street Food Stalls</text></svg></div>
+  <div class="card-body"><div class="card-cat">Market</div><div class="card-name">Chiang Mai Gate Market</div><div class="card-meta">Open 24h · Old City South · Where locals eat daily — 40฿ Khao Soi, mango sticky rice</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.4 (9,686)</span><span class="badge-pick">Top Pick</span><button class="card-map-btn" onclick="openMap(this,'Chiang Mai Gate Market, Bumrung Buri Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="market">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF6EF"/><rect x="20" y="28" width="12" height="88" rx="4" fill="#6A8828"/><rect x="208" y="28" width="12" height="88" rx="4" fill="#6A8828"/><rect x="18" y="36" width="204" height="10" rx="4" fill="#7A9830"/><rect x="74" y="42" width="92" height="24" rx="4" fill="#1C4A2A"/><text x="120" y="58" font-family="DM Sans,sans-serif" font-size="9" fill="#C8E870" text-anchor="middle" font-weight="600">JING JAI MARKET</text><rect x="22" y="84" width="55" height="50" rx="2" fill="#C0E0B8" opacity=".35"/><rect x="27" y="87" width="15" height="25" rx="1" fill="#9A6028" opacity=".8"/><rect x="44" y="87" width="15" height="25" rx="1" fill="#5A7838" opacity=".8"/><rect x="82" y="84" width="50" height="50" rx="2" fill="#B8D8B0" opacity=".3"/><ellipse cx="95" cy="99" rx="9" ry="7" fill="#A85030" opacity=".9"/><ellipse cx="110" cy="96" rx="8" ry="10" fill="#7A4020" opacity=".8"/><rect x="137" y="84" width="50" height="50" rx="2" fill="#A8C8A0" opacity=".3"/><rect x="149" y="99" width="26" height="7" rx="2" fill="#4A3010"/><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Artisan Crafts + Coffee</text></svg></div>
+  <div class="card-body"><div class="card-cat">Market</div><div class="card-name">Jing Jai Market</div><div class="card-meta">Daily · Weekends extra lively · Artisan crafts, local roasters, organic food, community soul</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.5 (11,297)</span><button class="card-map-btn" onclick="openMap(this,'Jing Jai Market, 46 Atsadathon Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="market">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF5EE"/><rect x="50" y="26" width="140" height="20" rx="3" fill="#4A9A5E"/><text x="120" y="40" font-family="DM Sans,sans-serif" font-size="9" fill="white" text-anchor="middle" font-weight="700">วโรรส · WAROROT</text><rect x="20" y="38" width="10" height="70" rx="2" fill="#6A7828"/><rect x="60" y="38" width="10" height="70" rx="2" fill="#6A7828"/><rect x="100" y="38" width="10" height="70" rx="2" fill="#6A7828"/><rect x="140" y="38" width="10" height="70" rx="2" fill="#6A7828"/><rect x="180" y="38" width="10" height="70" rx="2" fill="#6A7828"/><rect x="0" y="103" width="240" height="77" fill="#D8EED0"/><rect x="15" y="106" width="60" height="50" rx="2" fill="#C8E0C0" opacity=".6"/><ellipse cx="45" cy="123" rx="20" ry="8" fill="#D89020" opacity=".9"/><ellipse cx="42" cy="118" rx="18" ry="7" fill="#E0A030"/><rect x="16" y="106" width="28" height="12" rx="2" fill="#C8E870"/><text x="30" y="115" font-family="DM Sans,sans-serif" font-size="8" fill="#1A0800" text-anchor="middle" font-weight="700">มะม่วง</text><rect x="85" y="106" width="70" height="50" rx="2" fill="#C0D0E0" opacity=".4"/><rect x="88" y="113" width="10" height="36" rx="2" fill="#8820A0"/><rect x="100" y="113" width="10" height="36" rx="2" fill="#C83020"/><rect x="112" y="113" width="10" height="36" rx="2" fill="#1840C0"/><rect x="124" y="113" width="10" height="36" rx="2" fill="#D09020"/><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Dried Mango + Fabrics</text></svg></div>
+  <div class="card-body"><div class="card-cat">Market</div><div class="card-name">Warorot Market</div><div class="card-meta">Daily 6am–5pm · Ping River · Soul of Chiang Mai — dried mango, spices, local fabric</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.4 (6,707)</span><button class="card-map-btn" onclick="openMap(this,'Warorot Market, 10 Wichayanon Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="market">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF7F0"/><rect x="0" y="90" width="240" height="90" fill="#D5EDD9"/><rect x="5" y="85" width="230" height="12" fill="#3A1808"/><path d="M5 85 L5 65 L55 65 L55 85Z" fill="#C03018"/><path d="M60 85 L60 65 L110 65 L110 85Z" fill="#20408A"/><path d="M115 85 L115 65 L165 65 L165 85Z" fill="#207030"/><path d="M170 85 L170 65 L220 65 L220 85Z" fill="#A06010"/><ellipse cx="30" cy="79" rx="15" ry="6" fill="#E89020" opacity=".9"/><ellipse cx="85" cy="77" rx="12" ry="8" fill="#F5F0D0" opacity=".8"/><circle cx="70" cy="115" r="7" fill="#1A1A18"/><rect x="65" y="121" width="10" height="16" rx="3" fill="#1A1A18"/><circle cx="155" cy="112" r="7" fill="#1A1A18"/><rect x="150" y="118" width="10" height="16" rx="3" fill="#1A1A18"/><line x1="0" y1="52" x2="240" y2="52" stroke="#A8D070" stroke-width="1.5" opacity=".5"/><circle cx="20" cy="52" r="3" fill="#A8D070" opacity=".7"/><circle cx="60" cy="52" r="3" fill="#C0E070" opacity=".7"/><circle cx="100" cy="52" r="3" fill="#A8D070" opacity=".7"/><circle cx="140" cy="52" r="3" fill="#C0E070" opacity=".7"/><circle cx="180" cy="52" r="3" fill="#A8D070" opacity=".7"/><circle cx="220" cy="52" r="3" fill="#C0E070" opacity=".7"/><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Night Bazaar</text></svg></div>
+  <div class="card-body"><div class="card-cat">Market</div><div class="card-name">Chiang Mai Night Bazaar</div><div class="card-meta">Daily 5pm–midnight · Changklan Rd · Classic night market, street food, great atmosphere</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.3 (26,428)</span><button class="card-map-btn" onclick="openMap(this,'Chiang Mai Night Bazaar, Changklan Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="market">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF6EE"/><rect x="0" y="90" width="240" height="90" fill="#D0EAD4"/><rect x="5" y="86" width="230" height="10" fill="#2A1A08"/><path d="M0 55 L240 55 L240 86 L0 86Z" fill="#1A3A1A" opacity=".6"/><rect x="20" y="58" width="46" height="26" rx="2" fill="#C8E0B0" opacity=".4"/><rect x="22" y="60" width="10" height="22" rx="1" fill="#8A6028" opacity=".8"/><rect x="34" y="60" width="10" height="22" rx="1" fill="#C0D870" opacity=".7"/><rect x="46" y="60" width="18" height="22" rx="1" fill="#D09020" opacity=".8"/><rect x="74" y="58" width="46" height="26" rx="2" fill="#D8ECC0" opacity=".4"/><rect x="76" y="60" width="14" height="22" rx="2" fill="#E08028" opacity=".9"/><rect x="108" y="58" width="46" height="26" rx="2" fill="#C8E0B0" opacity=".4"/><rect x="110" y="60" width="18" height="22" rx="2" fill="#C04820" opacity=".8"/><rect x="130" y="60" width="14" height="22" rx="2" fill="#D08028" opacity=".8"/><text x="120" y="140" font-family="DM Sans,sans-serif" font-size="10" fill="#4A7A38" text-anchor="middle">Saturday only · 6–11pm</text><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Wua Lai Walking Street</text></svg></div>
+  <div class="card-body"><div class="card-cat">Walking Street</div><div class="card-name">Wua Lai Saturday Market</div><div class="card-meta">Sat only 6–11pm · Hai Ya · Local silver crafts, northern Thai street food, great atmosphere</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.5 (7,719)</span><button class="card-map-btn" onclick="openMap(this,'Wua Lai Walking Street, 69 Wua Lai Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="market">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF6EF"/><rect x="0" y="90" width="240" height="90" fill="#D5EDDA"/><rect x="5" y="86" width="230" height="10" fill="#2A1808"/><path d="M0 55 L240 55 L240 86 L0 86Z" fill="#1A2A18" opacity=".5"/><rect x="20" y="58" width="46" height="26" rx="2" fill="#C8E0B8" opacity=".4"/><rect x="22" y="60" width="10" height="22" rx="1" fill="#906028" opacity=".8"/><rect x="34" y="60" width="10" height="22" rx="1" fill="#C0B040" opacity=".7"/><rect x="74" y="58" width="46" height="26" rx="2" fill="#D0E8B8" opacity=".4"/><rect x="76" y="60" width="14" height="22" rx="2" fill="#D07028" opacity=".9"/><rect x="108" y="58" width="46" height="26" rx="2" fill="#C8E0B0" opacity=".4"/><rect x="110" y="60" width="18" height="22" rx="2" fill="#C84020" opacity=".8"/><text x="120" y="40" font-family="DM Sans,sans-serif" font-size="9" fill="#C8E870" text-anchor="middle" font-weight="600">Sunday Walking Street</text><text x="120" y="140" font-family="DM Sans,sans-serif" font-size="10" fill="#4A7A38" text-anchor="middle">Sundays only · 5–10pm</text><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Sunday Walking Street</text></svg></div>
+  <div class="card-body"><div class="card-cat">Walking Street</div><div class="card-name">Sunday Walking Street</div><div class="card-meta">Sun only 5–10pm · Old City · Huge street market, temples, local food, no alcohol zone</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.5 (2,446)</span><button class="card-map-btn" onclick="openMap(this,'Sunday Walking Street, Rachadamnoen Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="market">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF6EE"/><rect x="0" y="100" width="240" height="80" fill="#D0EAD4"/><rect x="10" y="24" width="220" height="80" rx="4" fill="#3A2818" opacity=".7"/><rect x="10" y="24" width="220" height="80" rx="4" fill="none" stroke="#5A7830" stroke-width="1"/><path d="M10 40 Q120 38 230 40" stroke="#5A6820" stroke-width="1" opacity=".5"/><path d="M10 56 Q120 54 230 56" stroke="#5A6820" stroke-width="1" opacity=".5"/><path d="M10 72 Q120 70 230 72" stroke="#5A6820" stroke-width="1" opacity=".5"/><path d="M10 88 Q120 86 230 88" stroke="#5A6820" stroke-width="1" opacity=".5"/><path d="M30 40 Q30 24 50 24 L70 24 Q90 24 90 40 L90 75 L30 75Z" fill="#2A1808" opacity=".6"/><rect x="36" y="32" width="48" height="38" rx="3" fill="#C8E870" opacity=".06"/><path d="M110 40 Q110 24 130 24 L150 24 Q170 24 170 40 L170 75 L110 75Z" fill="#2A1808" opacity=".6"/><rect x="55" y="78" width="130" height="22" rx="3" fill="#4A9A5E"/><text x="120" y="93" font-family="DM Sans,sans-serif" font-size="11" fill="white" text-anchor="middle" font-weight="700">ONE NIMMAN</text><rect x="15" y="103" width="210" height="20" rx="2" fill="#2A3818"/><circle cx="60" cy="106" r="4" fill="#C8E870" opacity=".8"/><circle cx="90" cy="104" r="4" fill="#A8D060" opacity=".8"/><circle cx="120" cy="106" r="4" fill="#C8E870" opacity=".8"/><circle cx="150" cy="104" r="4" fill="#A8D060" opacity=".8"/><circle cx="180" cy="106" r="4" fill="#C8E870" opacity=".8"/><text x="193" y="63" font-family="sans-serif" font-size="18" fill="#A8D860" opacity=".4">♪</text><rect x="50" y="153" width="140" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="165" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Indie Boutiques + Live Music</text></svg></div>
+  <div class="card-body"><div class="card-cat">Market / Mall</div><div class="card-name">One Nimman</div><div class="card-meta">Daily 11am–10pm · Nimman · Indie boutiques, street food, live music, light show 8 &amp; 9pm</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.5 (12,315)</span><button class="card-map-btn" onclick="openMap(this,'One Nimman, Nimmanahaeminda Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="market">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF6EF"/><rect x="0" y="100" width="240" height="80" fill="#D5EDD9"/><rect x="20" y="30" width="12" height="88" rx="4" fill="#7A8830"/><rect x="208" y="30" width="12" height="88" rx="4" fill="#7A8830"/><rect x="18" y="38" width="204" height="10" rx="4" fill="#8A9838"/><rect x="74" y="42" width="92" height="24" rx="4" fill="#2D6A3F"/><text x="120" y="58" font-family="DM Sans,sans-serif" font-size="9" fill="#C8E870" text-anchor="middle" font-weight="600">BAAN KANG WAT</text><rect x="22" y="84" width="55" height="50" rx="2" fill="#C0D8B8" opacity=".35"/><rect x="27" y="87" width="15" height="25" rx="1" fill="#A87038" opacity=".8"/><rect x="44" y="87" width="15" height="25" rx="1" fill="#6A8838" opacity=".8"/><rect x="82" y="84" width="50" height="50" rx="2" fill="#B8D0B0" opacity=".3"/><ellipse cx="95" cy="99" rx="9" ry="7" fill="#C07840" opacity=".9"/><ellipse cx="110" cy="96" rx="8" ry="10" fill="#8A5030" opacity=".8"/><rect x="137" y="84" width="50" height="50" rx="2" fill="#A8C8A0" opacity=".3"/><rect x="149" y="99" width="26" height="7" rx="2" fill="#4A3010"/><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Artist Village + Workshops</text></svg></div>
+  <div class="card-body"><div class="card-cat">Artist Village</div><div class="card-name">Baan Kang Wat</div><div class="card-meta">Tue–Sun 10am–6pm · Suthep · Creative workshops, ceramics, cafés, whimsical vibes</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.5 (5,827)</span><button class="card-map-btn" onclick="openMap(this,'Baan Kang Wat, 191 Soi Wat Umong, Chiang Mai')">📍</button></div></div>
+</div>
+
+<!-- ════ NIMMAN (8) ════ -->
+<div class="card" data-cat="nimman">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF6EF"/><defs><radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A9A5E" stop-opacity="0.12"/><stop offset="100%" stop-color="#EBF6EF" stop-opacity="0"/></radialGradient></defs><circle cx="120" cy="85" r="70" fill="url(#pg3)"/><rect x="96" y="52" width="48" height="82" rx="6" fill="#E8F4EC"/><rect x="96" y="52" width="48" height="82" rx="6" fill="none" stroke="#4A9A5E" stroke-width="1.5"/><rect x="108" y="42" width="24" height="14" rx="3" fill="#D5EDD9"/><rect x="110" y="35" width="20" height="10" rx="4" fill="#2D6A3F"/><rect x="98" y="78" width="44" height="54" rx="4" fill="#4A9A5E" opacity=".1"/><rect x="100" y="94" width="40" height="28" rx="2" fill="#F8FFF8"/><text x="120" y="105" font-family="DM Sans,sans-serif" font-size="7" fill="#1C4A2A" text-anchor="middle" font-weight="700">JOURNAL</text><text x="120" y="114" font-family="DM Sans,sans-serif" font-size="6" fill="#4A9A5E" text-anchor="middle">Natural Perfume Oil</text><circle cx="155" cy="58" r="2" fill="#90D870" opacity=".6"/><circle cx="162" cy="53" r="1.5" fill="#90D870" opacity=".5"/><rect x="46" y="104" width="18" height="40" rx="3" fill="#D5EDD9"/><rect x="46" y="104" width="18" height="40" rx="3" fill="none" stroke="#4A9A5E" stroke-width="1"/><rect x="68" y="109" width="16" height="35" rx="3" fill="#E0F0E8"/><rect x="68" y="109" width="16" height="35" rx="3" fill="none" stroke="#4A9A5E" stroke-width="1"/><rect x="160" y="107" width="16" height="37" rx="3" fill="#D5EDD9"/><rect x="160" y="107" width="16" height="37" rx="3" fill="none" stroke="#4A9A5E" stroke-width="1"/><rect x="50" y="150" width="140" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="162" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Thai Natural Perfume Oil</text></svg></div>
+  <div class="card-body"><div class="card-cat">Nimman Shop</div><div class="card-name">JOURNAL @ One Nimman</div><div class="card-meta">Daily 11am–10pm · Nimman · Iconic CM brand, mango sticky rice scent, must-buy gift</div><div class="card-footer"><span class="rating"><span class="star">★</span> 5.0 (4,274)</span><span class="badge-nimman">Nimman</span><button class="card-map-btn" onclick="openMap(this,'JOURNAL One Nimman, Nimmanahaeminda Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="nimman">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF6EE"/><rect x="0" y="100" width="240" height="80" fill="#D0EAD4"/><rect x="20" y="52" width="4" height="70" rx="2" fill="#5A7828"/><rect x="216" y="52" width="4" height="70" rx="2" fill="#5A7828"/><rect x="18" y="49" width="204" height="6" rx="3" fill="#6A8830"/><rect x="30" y="66" width="28" height="48" rx="4" fill="#8820A0" opacity=".75"/><path d="M30 72 L22 60 L36 66 M58 72 L66 60 L52 66" stroke="#7020A0" stroke-width="2" fill="none"/><rect x="68" y="63" width="32" height="50" rx="4" fill="#C09830" opacity=".7"/><path d="M68 70 L58 58 L72 63 M100 70 L110 58 L96 63" stroke="#A07820" stroke-width="2" fill="none"/><rect x="110" y="66" width="30" height="48" rx="4" fill="#183878" opacity=".75"/><rect x="150" y="63" width="32" height="50" rx="4" fill="#5C2010" opacity=".75"/><rect x="38" y="113" width="18" height="10" rx="2" fill="#C8E870"/><text x="47" y="121" font-family="DM Sans,sans-serif" font-size="6" fill="#1A1800" text-anchor="middle">VINTAGE</text><rect x="65" y="28" width="110" height="18" rx="3" fill="#0E1808"/><rect x="65" y="28" width="110" height="18" rx="3" fill="none" stroke="#4A9A5E" stroke-width="1"/><text x="120" y="41" font-family="DM Sans,sans-serif" font-size="9" fill="#90C870" text-anchor="middle" font-weight="700">KABER VINTAGE</text><rect x="50" y="153" width="140" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="165" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Silk &amp; Leather Vintage</text></svg></div>
+  <div class="card-body"><div class="card-cat">Nimman Shop</div><div class="card-name">Kaber Vintage</div><div class="card-meta">Sun only 2–8pm · Nimman Soi 13 · Best vintage in CM — silk jackets, leather, fair prices</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.8 (37)</span><span class="badge-nimman">Nimman</span><button class="card-map-btn" onclick="openMap(this,'Kaber Vintage, 34 Nimmana Haeminda Rd Lane 13, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="nimman">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF6EF"/><rect x="0" y="100" width="240" height="80" fill="#D5EDD9"/><rect x="20" y="35" width="200" height="72" rx="4" fill="#D8F0DC"/><rect x="25" y="82" width="190" height="8" rx="2" fill="#A8D0AC"/><rect x="38" y="60" width="16" height="24" rx="4" fill="#80C040" opacity=".85"/><rect x="62" y="54" width="14" height="30" rx="4" fill="#30B888" opacity=".85"/><rect x="84" y="57" width="18" height="27" rx="4" fill="#C04070" opacity=".85"/><rect x="110" y="47" width="14" height="37" rx="4" fill="#6030B0" opacity=".85"/><rect x="113" y="42" width="8" height="7" rx="2" fill="#4A9A5E"/><rect x="132" y="60" width="16" height="24" rx="4" fill="#E07020" opacity=".85"/><rect x="156" y="54" width="14" height="30" rx="4" fill="#1850B0" opacity=".85"/><rect x="178" y="58" width="16" height="26" rx="4" fill="#C02838" opacity=".85"/><path d="M70 47 Q74 40 70 33" stroke="#90E0B0" stroke-width="1.5" fill="none" opacity=".5" stroke-linecap="round"/><rect x="80" y="38" width="80" height="18" rx="3" fill="#0C1A0E"/><rect x="80" y="38" width="80" height="18" rx="3" fill="none" stroke="#4A9A5E" stroke-width="1"/><text x="120" y="50" font-family="DM Sans,sans-serif" font-size="9" fill="#90C870" text-anchor="middle" font-weight="700">MITH BOUTIQUE</text><rect x="50" y="153" width="140" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="165" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Local Perfume Boutique</text></svg></div>
+  <div class="card-body"><div class="card-cat">Nimman Shop</div><div class="card-name">MITH Boutique</div><div class="card-meta">Daily 11:30am–9pm · Nimman Soi 1 · Independent perfume boutique, staff help find your scent</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.8 (77)</span><span class="badge-nimman">Nimman</span><button class="card-map-btn" onclick="openMap(this,'MITH Boutique, 8 Nimmana Haeminda Rd Lane 1, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="nimman">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF6EE"/><rect x="0" y="100" width="240" height="80" fill="#D0EAD4"/><rect x="15" y="30" width="50" height="65" rx="3" fill="#D8F0DC"/><rect x="15" y="30" width="50" height="65" rx="3" fill="none" stroke="#4A9A5E" stroke-width="1"/><rect x="18" y="33" width="44" height="45" rx="2" fill="#E8F8DC"/><ellipse cx="40" cy="52" rx="15" ry="10" fill="#808880"/><circle cx="40" cy="42" r="8" fill="#909880"/><path d="M30 52 L28 65" stroke="#608060" stroke-width="4" stroke-linecap="round"/><path d="M50 52 L52 65" stroke="#608060" stroke-width="4" stroke-linecap="round"/><text x="40" y="84" font-family="DM Sans,sans-serif" font-size="6" fill="#5A7858" text-anchor="middle">CHIANG MAI</text><rect x="75" y="30" width="50" height="65" rx="3" fill="#D8F0DC"/><rect x="75" y="30" width="50" height="65" rx="3" fill="none" stroke="#4A9A5E" stroke-width="1"/><rect x="78" y="33" width="44" height="45" rx="2" fill="#D0E8D0"/><path d="M82 78 L100 45 L118 78Z" fill="#4A9A5E" opacity=".8"/><path d="M88 78 L100 55 L112 78Z" fill="#5AAA68" opacity=".9"/><rect x="135" y="30" width="50" height="65" rx="3" fill="#D8F0DC"/><rect x="135" y="30" width="50" height="65" rx="3" fill="none" stroke="#4A9A5E" stroke-width="1"/><rect x="138" y="33" width="44" height="45" rx="2" fill="#E8F4D8"/><circle cx="155" cy="52" r="8" fill="#8ABE8A"/><circle cx="155" cy="52" r="5" fill="#C8E870"/><circle cx="168" cy="48" r="6" fill="#5A9A68"/><rect x="20" y="110" width="35" height="45" rx="4" fill="#E04018" opacity=".8"/><circle cx="100" cy="118" r="6" fill="#D0E030"/><circle cx="115" cy="122" r="5" fill="#40C8A0"/><circle cx="128" cy="116" r="5" fill="#E05830"/><rect x="50" y="154" width="140" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Art Prints + Tees</text></svg></div>
+  <div class="card-body"><div class="card-cat">Nimman Shop</div><div class="card-name">PLAYWORKS</div><div class="card-meta">Daily 9am–10pm · Nimman · Sibling-artist brand — art prints, tees, stickers, café inside</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.3 (402)</span><span class="badge-nimman">Nimman</span><button class="card-map-btn" onclick="openMap(this,'PLAYWORKS, 165 Suthep Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="nimman">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EBF7F0"/><rect x="0" y="100" width="240" height="80" fill="#D5EDD9"/><rect x="20" y="30" width="200" height="75" rx="8" fill="#E8F8EC"/><rect x="25" y="35" width="190" height="65" rx="6" fill="none" stroke="#C0E0C8" stroke-width="1"/><ellipse cx="80" cy="64" rx="28" ry="20" fill="#F8F0E0"/><ellipse cx="80" cy="61" rx="22" ry="15" fill="#FAF4E8"/><path d="M56 60 Q68 54 80 58 Q92 52 104 58" stroke="#D0C080" stroke-width="1.5" fill="none" opacity=".5"/><ellipse cx="150" cy="62" rx="26" ry="18" fill="#E8F0E8"/><ellipse cx="150" cy="59" rx="20" ry="13" fill="#F0F8F0"/><path d="M128 58 Q140 52 152 56 Q164 50 174 56" stroke="#A0C080" stroke-width="1.5" fill="none" opacity=".5"/><rect x="60" y="105" width="50" height="40" rx="6" fill="#C8E0D8" opacity=".5"/><rect x="128" y="105" width="50" height="40" rx="6" fill="#D0E8D0" opacity=".5"/><text x="85" y="130" font-family="DM Sans,sans-serif" font-size="8" fill="#3A6A42" text-anchor="middle">LINEN</text><text x="153" y="130" font-family="DM Sans,sans-serif" font-size="8" fill="#3A6A42" text-anchor="middle">DRESSES</text><rect x="50" y="153" width="140" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="165" font-family="DM Sans,sans-serif" font-size="10" fill="#C8F0A0" text-anchor="middle" font-weight="600">Linen Slow Fashion</text></svg></div>
+  <div class="card-body"><div class="card-cat">Nimman Shop</div><div class="card-name">ISARA</div><div class="card-meta">Daily 11am–7pm · Nimman Soi 17 · Handmade linen fashion by local designer, breathable &amp; elegant</div><div class="card-footer"><span class="rating"><span class="star">★</span> 5.0 (73)</span><span class="badge-nimman">Nimman</span><button class="card-map-btn" onclick="openMap(this,'ISARA, 14 Nimmanhaemin Soi 17, Chiang Mai')">📍</button></div></div>
+</div>
+
+<!-- ════ VIEWPOINTS (6) ════ -->
+<div class="card" data-cat="viewpoint">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F59040"/><stop offset="50%" stop-color="#F8C070"/><stop offset="100%" stop-color="#A8D8F0"/></linearGradient></defs><rect width="240" height="180" fill="url(#sky1)"/><circle cx="195" cy="45" r="28" fill="#FFA030" opacity=".9"/><circle cx="195" cy="45" r="22" fill="#FFB040" opacity=".8"/><path d="M0 130 Q40 110 80 125 Q120 108 160 120 Q200 108 240 118 L240 180 L0 180Z" fill="#2D6A3F"/><path d="M0 140 Q50 125 100 135 Q150 120 200 130 Q220 125 240 128 L240 180 L0 180Z" fill="#3D8A52"/><path d="M0 155 Q60 140 120 148 Q180 138 240 145 L240 180 L0 180Z" fill="#4A9A5E"/><path d="M30 125 Q35 105 42 125Z" fill="#1A4A24"/><path d="M55 118 Q62 95 70 118Z" fill="#1C5228"/><path d="M160 122 Q167 100 175 122Z" fill="#1A4A24"/><path d="M190 115 Q198 92 208 115Z" fill="#1C5228"/><path d="M0 105 Q30 95 60 102 Q90 90 120 98 Q150 88 180 95 Q210 88 240 95" stroke="#E8B050" stroke-width="1" fill="none" opacity=".4"/><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="600">Sunset Panorama</text></svg></div>
+  <div class="card-body"><div class="card-cat">Viewpoint</div><div class="card-name">Doi Pui Viewpoint</div><div class="card-meta">Open 24h · Suthep · Best sunset in Chiang Mai — layered green mountains, free entry</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.6 (1,601)</span><span class="badge-view">Top Pick</span><button class="card-map-btn" onclick="openMap(this,'Doi Pui Viewpoint, Suthep, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="viewpoint">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#B8D8F0"/><stop offset="60%" stop-color="#D8EFF8"/><stop offset="100%" stop-color="#E8F8EC"/></linearGradient></defs><rect width="240" height="180" fill="url(#sky2)"/><ellipse cx="60" cy="40" r="30" fill="white" opacity=".6"/><ellipse cx="100" cy="32" r="22" fill="white" opacity=".5"/><ellipse cx="170" cy="45" r="28" fill="white" opacity=".55"/><path d="M0 120 Q50 100 100 115 Q150 98 200 110 Q220 104 240 108 L240 180 L0 180Z" fill="#1A3D24"/><path d="M0 135 Q60 118 120 130 Q180 115 240 124 L240 180 L0 180Z" fill="#2D6A3F"/><path d="M0 150 Q60 136 120 145 Q180 132 240 140 L240 180 L0 180Z" fill="#3D8A52"/><path d="M40 118 Q46 98 55 118Z" fill="#0D2814"/><path d="M70 112 Q78 88 88 112Z" fill="#102E18"/><path d="M145 115 Q152 92 162 115Z" fill="#0D2814"/><path d="M180 108 Q188 84 200 108Z" fill="#102E18"/><path d="M200 60 Q220 50 235 60" stroke="#D8E870" stroke-width="1.5" fill="none" opacity=".5"/><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="600">City &amp; Mountain Vista</text></svg></div>
+  <div class="card-body"><div class="card-cat">Viewpoint</div><div class="card-name">Chaloem Pavilion Viewpoint</div><div class="card-meta">Open 24h · Doi Suthep Road · Easy access, parking, great view of Chiang Mai city &amp; airport</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.5 (2,465)</span><span class="badge-view">Viewpoint</span><button class="card-map-btn" onclick="openMap(this,'Chaloem Phra Kiat Pavilion Viewpoint, 99 Huaykaew Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="viewpoint">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7AB8E0"/><stop offset="100%" stop-color="#C8E8EC"/></linearGradient></defs><rect width="240" height="180" fill="url(#sky3)"/><path d="M0 125 Q60 100 120 115 Q180 95 240 110 L240 180 L0 180Z" fill="#1C4A2A"/><path d="M0 140 Q60 120 120 132 Q180 114 240 126 L240 180 L0 180Z" fill="#2D6A3F"/><path d="M0 155 Q60 140 120 148 Q180 135 240 145 L240 180 L0 180Z" fill="#4A9A5E"/><path d="M20 125 Q26 102 35 125Z" fill="#0D2814"/><path d="M48 118 Q56 92 67 118Z" fill="#102E18"/><path d="M155 120 Q162 94 172 120Z" fill="#0D2814"/><path d="M190 112 Q198 86 210 112Z" fill="#102E18"/><path d="M100 122 Q108 94 118 122Z" fill="#0D2814"/><rect x="105" y="54" width="30" height="48" rx="4" fill="#B8A870" opacity=".9"/><path d="M95 54 L120 38 L145 54Z" fill="#C8B870"/><path d="M100 54 L120 42 L140 54Z" fill="#E0C878"/><circle cx="120" cy="40" r="5" fill="#F0E080"/><circle cx="120" cy="40" r="3" fill="#F8F0A0"/><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="600">Temple &amp; Valley View</text></svg></div>
+  <div class="card-body"><div class="card-cat">Viewpoint</div><div class="card-name">Mon Pha Dham</div><div class="card-meta">Daily 5am–8pm · Suthep · 1,350m altitude, breathtaking panorama, peaceful short trail</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.5 (560)</span><span class="badge-view">Viewpoint</span><button class="card-map-btn" onclick="openMap(this,'Mon Pha Dham Viewpoint, Suthep, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="viewpoint">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sky4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E8A040"/><stop offset="40%" stop-color="#F8D080"/><stop offset="100%" stop-color="#C8E8F0"/></linearGradient></defs><rect width="240" height="180" fill="url(#sky4)"/><circle cx="185" cy="50" r="25" fill="#FFA030" opacity=".85"/><circle cx="185" cy="50" r="19" fill="#FFB040" opacity=".8"/><path d="M0 118 Q50 100 100 112 Q150 96 200 108 Q220 102 240 106 L240 180 L0 180Z" fill="#1A3D24"/><path d="M0 133 Q50 116 100 128 Q150 112 200 122 Q220 116 240 120 L240 180 L0 180Z" fill="#2D6A3F"/><path d="M0 150 Q60 135 120 144 Q180 130 240 140 L240 180 L0 180Z" fill="#4A9A5E"/><path d="M20 118 Q28 95 38 118Z" fill="#0D2814"/><path d="M55 112 Q64 88 75 112Z" fill="#102E18"/><path d="M158 115 Q166 90 177 115Z" fill="#0D2814"/><path d="M195 108 Q204 82 216 108Z" fill="#102E18"/><rect x="100" y="50" width="40" height="55" rx="3" fill="#3A2818" opacity=".7"/><rect x="100" y="50" width="40" height="55" rx="3" fill="none" stroke="#C8A040" stroke-width="1"/><path d="M90 50 L120 34 L150 50Z" fill="#4A3820"/><path d="M95 50 L120 38 L145 50Z" fill="#5A4828"/><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="600">Doikham Panorama</text></svg></div>
+  <div class="card-body"><div class="card-cat">Viewpoint</div><div class="card-name">Doikham Panorama</div><div class="card-meta">Always open · Suthep · Hike up through forest, overlooks CMU campus &amp; mountains</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.8 (36)</span><span class="badge-view">Viewpoint</span><button class="card-map-btn" onclick="openMap(this,'Doikham Panorama View Point, Suthep, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="viewpoint">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sky5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8AC0E8"/><stop offset="100%" stop-color="#D8EEF5"/></linearGradient></defs><rect width="240" height="180" fill="url(#sky5)"/><ellipse cx="50" cy="38" r="26" fill="white" opacity=".5"/><ellipse cx="90" cy="30" r="20" fill="white" opacity=".45"/><ellipse cx="170" cy="42" r="24" fill="white" opacity=".5"/><rect x="80" y="60" width="80" height="70" rx="4" fill="#3A2818" opacity=".5"/><rect x="80" y="60" width="80" height="70" rx="4" fill="none" stroke="#C0A050" stroke-width="1.5"/><rect x="82" y="62" width="76" height="65" rx="2" fill="#C8A040" opacity=".08"/><rect x="84" y="64" width="30" height="20" rx="2" fill="#C8D8E8" opacity=".5"/><rect x="126" y="64" width="28" height="20" rx="2" fill="#C8D8E8" opacity=".5"/><rect x="84" y="90" width="30" height="20" rx="2" fill="#C8D8E8" opacity=".5"/><rect x="126" y="90" width="28" height="20" rx="2" fill="#C8D8E8" opacity=".5"/><rect x="100" y="100" width="18" height="30" rx="2" fill="#B89040" opacity=".7"/><path d="M0 138 Q60 120 120 132 Q180 116 240 126 L240 180 L0 180Z" fill="#1A4A2A"/><path d="M0 154 Q60 138 120 148 Q180 134 240 142 L240 180 L0 180Z" fill="#2D6A3F"/><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="600">Maya Rooftop — Doi Suthep</text></svg></div>
+  <div class="card-body"><div class="card-cat">Rooftop Viewpoint</div><div class="card-name">Nimman Hill (Maya Rooftop)</div><div class="card-meta">Daily 4pm–midnight · Nimman · Rooftop of Maya Mall — city + Doi Suthep sunset views</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.3 (249)</span><span class="badge-view">Viewpoint</span><button class="card-map-btn" onclick="openMap(this,'Nimman Hill Viewpoint, Maya Mall Rooftop, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="viewpoint">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sky6" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1808"/><stop offset="30%" stop-color="#6A3010"/><stop offset="60%" stop-color="#F0A040"/><stop offset="100%" stop-color="#C8D8F0"/></linearGradient></defs><rect width="240" height="180" fill="url(#sky6)"/><circle cx="120" cy="70" r="32" fill="#FF8020" opacity=".8"/><circle cx="120" cy="70" r="24" fill="#FFA030" opacity=".7"/><circle cx="120" cy="70" r="16" fill="#FFC040" opacity=".9"/><path d="M0 125 Q50 105 100 118 Q150 100 200 112 Q220 106 240 110 L240 180 L0 180Z" fill="#1A3D24"/><path d="M0 140 Q50 124 100 134 Q150 116 200 128 Q220 122 240 126 L240 180 L0 180Z" fill="#2D6A3F"/><path d="M0 155 Q60 140 120 150 Q180 136 240 146 L240 180 L0 180Z" fill="#4A9A5E"/><path d="M15 125 Q22 100 32 125Z" fill="#0D2814"/><path d="M45 118 Q54 92 65 118Z" fill="#102E18"/><path d="M155 122 Q163 95 174 122Z" fill="#0D2814"/><path d="M190 115 Q199 88 212 115Z" fill="#102E18"/><path d="M88 125 Q96 98 108 125Z" fill="#0D2814"/><rect x="55" y="154" width="130" height="17" rx="8" fill="#2D6A3F"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="600">Sunrise — Golden Hour</text></svg></div>
+  <div class="card-body"><div class="card-cat">Viewpoint</div><div class="card-name">Wat Umong Sunset Trail</div><div class="card-meta">Daily 4am–8pm · Suthep · Forest temple + walking trail with stunning sunset views</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.6 (10,875)</span><span class="badge-view">Viewpoint</span><button class="card-map-btn" onclick="openMap(this,'Wat Umong Suan Putthatham, 135 Suthep, Chiang Mai')">📍</button></div></div>
+</div>
+
+<!-- ════ KIDS (8) ════ -->
+<div class="card" data-cat="kids">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#FDE8F5"/><rect x="0" y="120" width="240" height="60" fill="#F8D0EE"/><circle cx="72" cy="138" r="14" fill="#F87070" opacity=".85"/><circle cx="72" cy="135" r="10" fill="#FA9090" opacity=".7"/><circle cx="100" cy="142" r="13" fill="#70C8F0" opacity=".85"/><circle cx="100" cy="139" r="9" fill="#90D8F8" opacity=".7"/><circle cx="128" cy="136" r="14" fill="#90E870" opacity=".85"/><circle cx="128" cy="133" r="10" fill="#B0F890" opacity=".7"/><circle cx="156" cy="140" r="13" fill="#F8D040" opacity=".85"/><circle cx="156" cy="137" r="9" fill="#F8E060" opacity=".7"/><circle cx="85" cy="148" r="11" fill="#E070F0" opacity=".8"/><circle cx="142" cy="150" r="12" fill="#70E0F0" opacity=".8"/><circle cx="58" cy="148" r="10" fill="#F0A030" opacity=".8"/><path d="M165 60 L200 130" stroke="#F870A0" stroke-width="12" stroke-linecap="round"/><path d="M163 62 L198 132" stroke="#FA90B8" stroke-width="8" stroke-linecap="round" opacity=".5"/><rect x="155" y="48" width="40" height="16" rx="4" fill="#E870A0"/><rect x="30" y="50" width="10" height="80" rx="3" fill="#70C8F0"/><rect x="60" y="50" width="10" height="80" rx="3" fill="#70C8F0"/><rect x="28" y="62" width="44" height="6" rx="3" fill="#F87070"/><rect x="28" y="78" width="44" height="6" rx="3" fill="#90E870"/><rect x="28" y="94" width="44" height="6" rx="3" fill="#F8D040"/><circle cx="180" cy="72" r="9" fill="#F5C490"/><ellipse cx="180" cy="68" rx="9" ry="5" fill="#7A4010"/><rect x="173" y="80" width="14" height="16" rx="3" fill="#70B0F0"/><rect x="62" y="152" width="116" height="17" rx="8" fill="#C8409A"/><text x="120" y="164" font-family="DM Sans,sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="600">Indoor Play — Ball Pit</text></svg></div>
+  <div class="card-body"><div class="card-cat">Kids · Indoor Play</div><div class="card-name">Kid's Kingdom</div><div class="card-meta">Daily 10:30am–9pm · Tha Sala · Ball pit, slides, tunnels, trampoline — only 150฿/child all day</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.5 (85)</span><span class="badge-kids">2yr+ ✓</span><button class="card-map-btn" onclick="openMap(this,'Kids Kingdom, 224 Tha Sala, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="kids">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#EAF8F0"/><rect x="0" y="115" width="240" height="65" fill="#D8F0E4"/><rect x="20" y="35" width="200" height="85" rx="8" fill="#F8F0E4"/><rect x="35" y="50" width="20" height="20" rx="2" fill="#F87070"/><rect x="58" y="58" width="20" height="20" rx="2" fill="#70C8F0"/><rect x="35" y="72" width="20" height="20" rx="2" fill="#F8D040"/><rect x="58" y="45" width="20" height="12" rx="2" fill="#90E870"/><rect x="90" y="48" width="50" height="40" rx="4" fill="#F0D8C0"/><rect x="93" y="52" width="44" height="30" rx="2" fill="#E8C8A8"/><circle cx="108" cy="62" r="6" fill="#D8A878"/><circle cx="122" cy="62" r="6" fill="#D8A878"/><rect x="155" y="50" width="50" height="38" rx="4" fill="#D8EEF8"/><rect x="158" y="54" width="8" height="28" rx="1" fill="#F87070"/><rect x="168" y="54" width="8" height="28" rx="1" fill="#90E870"/><rect x="178" y="54" width="8" height="28" rx="1" fill="#F8D040"/><rect x="188" y="54" width="8" height="28" rx="1" fill="#E070F0"/><path d="M80 35 L80 95" stroke="#C89060" stroke-width="3"/><path d="M80 35 L95 95" stroke="#C89060" stroke-width="3"/><rect x="75" y="88" width="25" height="8" rx="4" fill="#B07840"/><rect x="92" y="110" width="56" height="18" rx="4" fill="#C8F0D8"/><text x="120" y="122" font-family="DM Sans,sans-serif" font-size="8" fill="#2A6A3A" text-anchor="middle" font-weight="600">Kids-size toilets + nursing room</text><rect x="55" y="154" width="130" height="17" rx="8" fill="#C8409A"/><text x="120" y="166" font-family="DM Sans,sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="600">Wooden Toy Paradise</text></svg></div>
+  <div class="card-body"><div class="card-cat">Kids · Indoor Play</div><div class="card-name">Wooden Ville Kids Café</div><div class="card-meta">Tue–Sun 10am–7pm · Non Hoi · Role-play, books, puzzles, swing — kids-size toilets &amp; nursing room</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.6 (127)</span><span class="badge-kids">0yr+ ✓</span><button class="card-map-btn" onclick="openMap(this,'Wooden Ville Kids Cafe, 549 Chiang Mai-Lamphun Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="kids">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#FFF0E8"/><rect x="0" y="120" width="240" height="60" fill="#FFE0D0"/><path d="M30 120 L30 60 Q30 40 50 40 L190 40 Q210 40 210 60 L210 120Z" fill="#F87070" opacity=".25"/><rect x="30" y="35" width="28" height="35" rx="4" fill="#F87070"/><path d="M30 35 L44 20 L58 35Z" fill="#E85050"/><rect x="182" y="35" width="28" height="35" rx="4" fill="#70C8F0"/><path d="M182 35 L196 20 L210 35Z" fill="#50A8E0"/><path d="M50 90 Q70 70 90 90 Q110 110 130 90 Q150 70 170 90 Q190 110 210 90" stroke="#F87070" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M50 105 Q70 85 90 105 Q110 125 130 105 Q150 85 170 105 Q190 125 210 105" stroke="#70C8F0" stroke-width="4" fill="none" stroke-linecap="round" opacity=".7"/><circle cx="90" cy="78" r="9" fill="#F5C490"/><path d="M86 87 L86 105" stroke="#F8D040" stroke-width="6" stroke-linecap="round"/><circle cx="150" cy="72" r="9" fill="#F5C490"/><path d="M146 81 L146 99" stroke="#90E870" stroke-width="6" stroke-linecap="round"/><rect x="80" y="135" width="80" height="18" rx="9" fill="#C8409A"/><text x="120" y="147" font-family="DM Sans,sans-serif" font-size="9" fill="white" text-anchor="middle" font-weight="600">★ 4.9 · Bouncetopia</text></svg></div>
+  <div class="card-body"><div class="card-cat">Kids · Bounce</div><div class="card-name">Bouncetopia</div><div class="card-meta">Daily 11am–9pm · Central Eastville · Huge bounce castle with slides, ball pit, toddler zone, safe staff</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.9 (636)</span><span class="badge-kids">2yr+ ✓</span><button class="card-map-btn" onclick="openMap(this,'Bouncetopia, Central Eastville, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="kids">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#E8F8E8"/><rect x="0" y="110" width="240" height="70" fill="#D0F0D0"/><ellipse cx="50" cy="80" rx="35" ry="50" fill="#3D8A52" opacity=".4"/><ellipse cx="200" cy="75" rx="32" ry="46" fill="#4A9A5E" opacity=".4"/><ellipse cx="125" cy="65" rx="28" ry="40" fill="#2D6A3F" opacity=".4"/><rect x="80" y="90" width="8" height="35" rx="3" fill="#C87010"/><rect x="152" y="90" width="8" height="35" rx="3" fill="#C87010"/><rect x="78" y="86" width="82" height="8" rx="4" fill="#B06010"/><path d="M95 94 L95 120" stroke="#808080" stroke-width="2"/><rect x="88" y="118" width="14" height="5" rx="2" fill="#F87070"/><path d="M145 94 L142 120" stroke="#808080" stroke-width="2"/><rect x="136" y="118" width="14" height="5" rx="2" fill="#70C8F0"/><path d="M170 85 L195 118" stroke="#F8D040" stroke-width="10" stroke-linecap="round"/><rect x="165" y="74" width="30" height="14" rx="3" fill="#F0C030"/><circle cx="95" cy="112" r="7" fill="#F5C490"/><circle cx="143" cy="112" r="7" fill="#F5C490"/><ellipse cx="50" cy="145" rx="30" ry="12" fill="#70C8F0" opacity=".5"/><circle cx="168" cy="130" r="4" fill="#F870A0"/><circle cx="178" cy="125" r="3" fill="#F0E040"/><rect x="68" y="152" width="104" height="18" rx="9" fill="#2D6A3F"/><text x="120" y="164" font-family="DM Sans,sans-serif" font-size="9" fill="white" text-anchor="middle" font-weight="600">Free · Feed Fish in Pond</text></svg></div>
+  <div class="card-body"><div class="card-cat">Kids · Park · Free</div><div class="card-name">Nong Buak Hard Park</div><div class="card-meta">Daily 4am–9pm · Old City · Free public park, playground, fish &amp; turtle pond — toddlers love it</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.6 (281)</span><span class="badge-kids">All ages ✓</span><button class="card-map-btn" onclick="openMap(this,'Nong Buak Hard Public Park, Thanon Arak, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="kids">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#FFF5E0"/><rect x="0" y="115" width="240" height="65" fill="#FFE8C0"/><rect x="30" y="80" width="180" height="45" rx="8" fill="#F8A030"/><rect x="30" y="80" width="180" height="45" rx="8" fill="none" stroke="#D08010" stroke-width="2"/><rect x="38" y="86" width="30" height="22" rx="2" fill="#C8E8F8" opacity=".7"/><rect x="75" y="86" width="30" height="22" rx="2" fill="#C8E8F8" opacity=".7"/><rect x="112" y="86" width="30" height="22" rx="2" fill="#C8E8F8" opacity=".7"/><rect x="149" y="86" width="30" height="22" rx="2" fill="#C8E8F8" opacity=".7"/><circle cx="65" cy="125" r="14" fill="#3A2A10"/><circle cx="65" cy="125" r="9" fill="#5A4020"/><circle cx="175" cy="125" r="14" fill="#3A2A10"/><circle cx="175" cy="125" r="9" fill="#5A4020"/><rect x="185" y="30" width="12" height="55" rx="4" fill="#E8B830"/><rect x="182" y="25" width="8" height="20" rx="3" fill="#D8A820"/><circle cx="186" cy="35" r="3" fill="#B87810" opacity=".6"/><circle cx="190" cy="45" r="3" fill="#B87810" opacity=".6"/><ellipse cx="178" cy="22" rx="10" ry="8" fill="#D8A820"/><circle cx="175" cy="20" r="2" fill="#2A1A00"/><ellipse cx="40" cy="65" rx="22" ry="14" fill="white"/><ellipse cx="40" cy="62" rx="20" ry="12" fill="white"/><path d="M24 60 L24 72" stroke="#2A2A2A" stroke-width="2.5"/><path d="M30 58 L30 70" stroke="#2A2A2A" stroke-width="2.5"/><path d="M36 57 L36 69" stroke="#2A2A2A" stroke-width="2.5"/><path d="M42 58 L42 70" stroke="#2A2A2A" stroke-width="2.5"/><path d="M48 58 L48 70" stroke="#2A2A2A" stroke-width="2.5"/><rect x="65" y="145" width="110" height="17" rx="8" fill="#C8409A"/><text x="120" y="157" font-family="DM Sans,sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="600">Night Safari Tram Ride</text></svg></div>
+  <div class="card-body"><div class="card-cat">Kids · Animals</div><div class="card-name">Chiang Mai Night Safari</div><div class="card-meta">Daily 11am–10pm · Hang Dong · Tram through animal park at dusk — giraffes, zebras, magical for toddlers</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.3 (11,377)</span><span class="badge-kids">2yr+ ✓</span><button class="card-map-btn" onclick="openMap(this,'Chiang Mai Night Safari, 33 Nong Kwai, Hang Dong, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="kids">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#F0FCF4"/><rect x="0" y="115" width="240" height="65" fill="#D8F0E0"/><rect x="15" y="35" width="210" height="85" rx="6" fill="#E8F8EC"/><ellipse cx="80" cy="130" rx="45" ry="20" fill="#F0D890" opacity=".8"/><ellipse cx="80" cy="127" rx="40" ry="16" fill="#F8E8A0"/><path d="M58 125 Q62 112 66 125" fill="#F87070" stroke="#E05050" stroke-width="1"/><path d="M90 124 Q94 111 98 124" fill="#70C8F0" stroke="#50A8D0" stroke-width="1"/><rect x="145" y="98" width="60" height="30" rx="4" fill="#70D8F8" opacity=".7"/><rect x="148" y="101" width="54" height="24" rx="2" fill="#A0E8F8" opacity=".6"/><rect x="38" y="70" width="18" height="18" rx="2" fill="#F87070"/><rect x="58" y="74" width="18" height="18" rx="2" fill="#F8D040"/><rect x="38" y="90" width="18" height="18" rx="2" fill="#90E870"/><rect x="58" y="56" width="18" height="14" rx="2" fill="#70C8F0"/><ellipse cx="195" cy="60" rx="30" ry="38" fill="#4A9A5E" opacity=".4"/><rect x="110" y="92" width="32" height="18" rx="5" fill="#F87070"/><circle cx="116" cy="110" r="5" fill="#2A2A2A"/><circle cx="136" cy="110" r="5" fill="#2A2A2A"/><circle cx="168" cy="72" r="12" fill="#F8D040" opacity=".8"/><rect x="68" y="148" width="104" height="18" rx="9" fill="#2D6A3F"/><text x="120" y="160" font-family="DM Sans,sans-serif" font-size="9" fill="white" text-anchor="middle" font-weight="600">Sand, Water + Wooden Toys</text></svg></div>
+  <div class="card-body"><div class="card-cat">Kids · Indoor + Outdoor</div><div class="card-name">LOL Kids Castle</div><div class="card-meta">Daily 9am–7pm (closed Wed) · San Sai · Sand pit, water table, wooden toys, ride-ons — 2yr toddler paradise</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.8 (132)</span><span class="badge-kids">1yr+ ✓</span><button class="card-map-btn" onclick="openMap(this,'LOL Kids Castle, 334 Nong Chom, San Sai, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="kids">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#FFF8E8"/><rect x="0" y="115" width="240" height="65" fill="#FFF0C8"/><ellipse cx="50" cy="80" rx="30" ry="42" fill="#C870D0" opacity=".3"/><ellipse cx="120" cy="70" rx="28" ry="38" fill="#F870A0" opacity=".3"/><ellipse cx="190" cy="78" rx="25" ry="36" fill="#70C8F0" opacity=".3"/><circle cx="50" cy="60" r="8" fill="#E870B0"/><circle cx="50" cy="60" r="5" fill="#F8E040"/><circle cx="65" cy="55" r="7" fill="#F87090"/><circle cx="65" cy="55" r="4" fill="#F8E040"/><circle cx="80" cy="62" r="8" fill="#C870E0"/><circle cx="80" cy="62" r="5" fill="#F8E040"/><circle cx="120" cy="55" r="9" fill="#F87090"/><circle cx="120" cy="55" r="5" fill="#F8E040"/><circle cx="138" cy="50" r="7" fill="#70C8F0"/><circle cx="138" cy="50" r="4" fill="#E8F840"/><circle cx="105" cy="60" r="8" fill="#F8D040"/><circle cx="105" cy="60" r="5" fill="#F87050"/><rect x="55" y="100" width="130" height="28" rx="6" fill="#F8A030"/><rect x="58" y="104" width="28" height="16" rx="2" fill="#C8E8F8" opacity=".7"/><rect x="92" y="104" width="28" height="16" rx="2" fill="#C8E8F8" opacity=".7"/><rect x="126" y="104" width="28" height="16" rx="2" fill="#C8E8F8" opacity=".7"/><circle cx="80" cy="128" r="9" fill="#3A2A10"/><circle cx="160" cy="128" r="9" fill="#3A2A10"/><path d="M178 60 Q188 50 195 60 Q188 70 178 60Z" fill="#F870A0" opacity=".7"/><path d="M195 60 Q205 50 212 60 Q205 70 195 60Z" fill="#F870A0" opacity=".7"/><circle cx="195" cy="60" r="3" fill="#F8E040"/><rect x="65" y="150" width="110" height="17" rx="8" fill="#C8409A"/><text x="120" y="162" font-family="DM Sans,sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="600">Flowers + Free Tram Ride</text></svg></div>
+  <div class="card-body"><div class="card-cat">Kids · Garden · Nature</div><div class="card-name">Royal Park Rajapruek</div><div class="card-meta">Daily 8am–6pm · Mae Hia · Stunning flower garden, free tram, butterflies — toddlers wander freely</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.5 (8,134)</span><span class="badge-kids">All ages ✓</span><button class="card-map-btn" onclick="openMap(this,'Royal Park Rajapruek, 334 Mae Hia, Chiang Mai')">📍</button></div></div>
+</div>
+
+<div class="card" data-cat="kids">
+  <div class="card-thumb"><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="180" fill="#F0F8F0"/><rect x="0" y="115" width="240" height="65" fill="#E0F0E4"/><rect x="10" y="28" width="120" height="90" rx="6" fill="#F8F4E8"/><rect x="20" y="40" width="30" height="22" rx="3" fill="#D8C8A0"/><rect x="58" y="38" width="30" height="22" rx="3" fill="#D8C8A0"/><rect x="20" y="70" width="30" height="22" rx="3" fill="#D8C8A0"/><rect x="58" y="68" width="30" height="22" rx="3" fill="#D8C8A0"/><rect x="24" y="42" width="22" height="14" rx="1" fill="#3A8AD4" opacity=".6"/><rect x="140" y="30" width="90" height="88" rx="6" fill="#D8F0DC"/><ellipse cx="175" cy="85" rx="30" ry="15" fill="#F87070" opacity=".8"/><ellipse cx="175" cy="83" rx="25" ry="11" fill="#FA9090" opacity=".7"/><rect x="148" y="38" width="60" height="6" rx="3" fill="#C87010"/><path d="M158 44 L155 78" stroke="#808080" stroke-width="2"/><rect x="149" y="76" width="12" height="5" rx="2" fill="#F8D040"/><path d="M183 44 L180 78" stroke="#808080" stroke-width="2"/><rect x="174" y="76" width="12" height="5" rx="2" fill="#70C8F0"/><ellipse cx="205" cy="100" rx="22" ry="14" fill="#F8E090" opacity=".8"/><rect x="148" y="58" width="8" height="35" rx="3" fill="#8A5020"/><rect x="158" y="55" width="8" height="35" rx="3" fill="#8A5020"/><rect x="147" y="65" width="20" height="5" rx="2" fill="#C87010"/><rect x="147" y="75" width="20" height="5" rx="2" fill="#C87010"/><rect x="55" y="148" width="130" height="17" rx="8" fill="#C8409A"/><text x="120" y="160" font-family="DM Sans,sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="600">Café + Outdoor Playground</text></svg></div>
+  <div class="card-body"><div class="card-cat">Kids · Café + Play</div><div class="card-name">Living the Dream Café</div><div class="card-meta">Daily 7:30am–10pm · Chang Phueak · Big outdoor playground, trampoline, sand, swings — parents work inside</div><div class="card-footer"><span class="rating"><span class="star">★</span> 4.5 (527)</span><span class="badge-kids">2yr+ ✓</span><button class="card-map-btn" onclick="openMap(this,'Living the Dream Cafe Playground, 115 Photharam Rd, Chiang Mai')">📍</button></div></div>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<div class="wave-bot"></div>
+<footer class="site-footer">
+  <span class="wordmark">Sansan's Chiang Mai List</span>
+  Made with love from the forests of Chiang Mai · เชียงใหม่ในดวงใจ
+</footer>
+
+<!-- ══ PLAN FAB ══ -->
+<button class="plan-fab" id="planFab" onclick="openPlan()">
+  <span>🗺 My Day Plan</span>
+  <span class="plan-fab-count" id="fabCount">0</span>
+</button>
+
+<!-- ══ ROADMAP PANEL ══ -->
+<div class="plan-overlay" id="planOverlay" onclick="closePlan()"></div>
+<div class="plan-panel" id="planPanel">
+  <div class="plan-header">
+    <span class="plan-title">✦ My Day Itinerary</span>
+    <button class="plan-close" onclick="closePlan()">✕</button>
+  </div>
+  <div class="plan-start-wrap">
+    <div class="plan-start-label">Starting point</div>
+    <div class="plan-start-row">
+      <input class="plan-start-input" id="planStartInput" type="text" placeholder="Hotel, Airbnb, café, or any address…"/>
+      <button class="plan-set-btn" onclick="setPlanStart()">Set</button>
+    </div>
+    <div class="plan-start-display" id="planStartDisplay"></div>
+  </div>
+  <div class="plan-list-wrap" id="planListWrap">
+    <div class="plan-empty" id="planEmpty">
+      <span class="plan-empty-icon">🗺</span>
+      <p>Tap <strong>+ Plan</strong> on any place card to add it here.<br>Then open all directions at once!</p>
+    </div>
+    <div id="planList"></div>
+  </div>
+  <div class="plan-actions">
+    <button class="plan-open-all" id="planOpenAll" onclick="openAllDirections()" disabled>Open full route in Google Maps ↗</button>
+    <button class="plan-clear" onclick="clearPlan()">Clear all</button>
+    <div class="plan-share-hint" id="planShareHint"></div>
+  </div>
+</div>
+
+<script>
+var startAddr='';
+var planItems=[];
+
+function saveHotel(){
+  var v=document.getElementById('hotelInput').value.trim();
+  if(!v){alert('Please enter a starting point.');return;}
+  startAddr=v.indexOf('Chiang Mai')>=0?v:v+', Chiang Mai, Thailand';
+  var h=document.getElementById('hotelHint');
+  h.textContent='📍 Starting from: "'+v+'" — click any 📍 for directions!';
+  h.style.color='rgba(200,240,160,.95)';h.style.fontWeight='500';
+  document.querySelectorAll('.map-btn,.card-map-btn').forEach(function(b){b.classList.add('on');});
+  document.getElementById('planStartInput').value=v;
+  syncPlanStart(v);
+}
+
+function setPlanStart(){
+  var v=document.getElementById('planStartInput').value.trim();
+  if(!v)return;
+  startAddr=v.indexOf('Chiang Mai')>=0?v:v+', Chiang Mai, Thailand';
+  document.getElementById('hotelInput').value=v;
+  var h=document.getElementById('hotelHint');
+  h.textContent='📍 Starting from: "'+v+'" — click any 📍 for directions!';
+  h.style.color='rgba(200,240,160,.95)';h.style.fontWeight='500';
+  document.querySelectorAll('.map-btn,.card-map-btn').forEach(function(b){b.classList.add('on');});
+  syncPlanStart(v);
+}
+
+function syncPlanStart(v){
+  var d=document.getElementById('planStartDisplay');
+  d.textContent='📍 '+v;d.style.display='block';
+  updatePlanOpenBtn();
+}
+
+document.getElementById('hotelInput').addEventListener('keydown',function(e){if(e.key==='Enter')saveHotel();});
+
+function openMap(btn,dest){
+  var full=dest.indexOf('Chiang Mai')>=0?dest:dest+', Chiang Mai, Thailand';
+  var d=encodeURIComponent(full);
+  var url=startAddr
+    ?'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(startAddr)+'&destination='+d
+    :'https://www.google.com/maps/search/?api=1&query='+d;
+  window.open(url,'_blank');
+}
+
+function filter(cat,btn){
+  document.querySelectorAll('.pill').forEach(function(p){p.classList.remove('active');});
+  btn.classList.add('active');
+  document.querySelectorAll('.card').forEach(function(c){
+    c.classList.toggle('hidden',cat!=='all'&&c.dataset.cat!==cat);
+  });
+}
+
+function togglePlan(btn,name,dest,cat){
+  var idx=planItems.findIndex(function(x){return x.dest===dest;});
+  if(idx>=0){
+    planItems.splice(idx,1);
+    btn.classList.remove('added');btn.textContent='+ Plan';
+  } else {
+    planItems.push({name:name,dest:dest,cat:cat});
+    btn.classList.add('added');btn.textContent='Added';
+  }
+  updateFab();renderPlan();
+}
+
+function removeFromPlan(dest){
+  planItems=planItems.filter(function(x){return x.dest!==dest;});
+  document.querySelectorAll('.add-btn').forEach(function(b){
+    if(b.dataset.dest===dest){b.classList.remove('added');b.textContent='+ Plan';}
+  });
+  updateFab();renderPlan();
+}
+
+function clearPlan(){
+  planItems=[];
+  document.querySelectorAll('.add-btn').forEach(function(b){b.classList.remove('added');b.textContent='+ Plan';});
+  updateFab();renderPlan();
+}
+
+function renderPlan(){
+  var list=document.getElementById('planList');
+  var empty=document.getElementById('planEmpty');
+  empty.style.display=planItems.length?'none':'block';
+  list.innerHTML='';
+  planItems.forEach(function(item,i){
+    var full=item.dest.indexOf('Chiang Mai')>=0?item.dest:item.dest+', Chiang Mai, Thailand';
+    var mapUrl=startAddr
+      ?'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(startAddr)+'&destination='+encodeURIComponent(full)
+      :'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(full);
+    var safeUrl=mapUrl.replace(/'/g,"\'");
+    var div=document.createElement('div');
+    div.innerHTML='<div class="plan-item"><div class="plan-step">'+(i+1)+'</div>'
+      +'<div class="plan-item-info"><div class="plan-item-name">'+item.name+'</div>'
+      +'<div class="plan-item-cat">'+item.cat+'</div></div>'
+      +'<div class="plan-item-actions">'
+      +'<button class="plan-dir-btn" onclick="window.open(''+safeUrl+'','_blank')">📍 Directions</button>'
+      +'<button class="plan-rm-btn" onclick="removeFromPlan(''+item.dest.replace(/'/g,"\'")+'')" >Remove</button>'
+      +'</div></div>'
+      +(i<planItems.length-1?'<div class="plan-connector"></div>':'');
+    list.appendChild(div);
+  });
+  updatePlanOpenBtn();
+}
+
+function updatePlanOpenBtn(){
+  var btn=document.getElementById('planOpenAll');
+  var hint=document.getElementById('planShareHint');
+  btn.disabled=planItems.length===0;
+  hint.textContent=planItems.length>0?planItems.length+' place'+(planItems.length>1?'s':'')+' in your plan':'';
+}
+
+function openAllDirections(){
+  if(planItems.length===0)return;
+  var origin=startAddr||'Chiang Mai, Thailand';
+  var stops=planItems.map(function(x){return x.dest.indexOf('Chiang Mai')>=0?x.dest:x.dest+', Chiang Mai, Thailand';});
+  var url;
+  if(stops.length===1){
+    url='https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(origin)+'&destination='+encodeURIComponent(stops[0]);
+  } else {
+    var dest=stops[stops.length-1];
+    var wp=stops.slice(0,-1).join('|');
+    url='https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(origin)+'&destination='+encodeURIComponent(dest)+'&waypoints='+encodeURIComponent(wp);
+  }
+  window.open(url,'_blank');
+}
+
+function updateFab(){
+  var fab=document.getElementById('planFab');
+  document.getElementById('fabCount').textContent=planItems.length;
+  fab.classList.toggle('show',planItems.length>0);
+}
+
+function openPlan(){
+  document.getElementById('planOverlay').classList.add('open');
+  document.getElementById('planPanel').classList.add('open');
+  document.body.style.overflow='hidden';
+  renderPlan();
+}
+
+function closePlan(){
+  document.getElementById('planOverlay').classList.remove('open');
+  document.getElementById('planPanel').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.card').forEach(function(card){
+    var footer=card.querySelector('.card-footer');
+    var mapBtn=card.querySelector('.card-map-btn');
+    if(!footer||!mapBtn)return;
+    var onc=mapBtn.getAttribute('onclick')||'';
+    var m=onc.match(/openMap\(this,'([^']+)'\)/);
+    if(!m)return;
+    var dest=m[1];
+    var nameEl=card.querySelector('.card-name');
+    var catEl=card.querySelector('.card-cat');
+    var name=nameEl?nameEl.textContent.trim():dest;
+    var cat=catEl?catEl.textContent.trim():'';
+    var btn=document.createElement('button');
+    btn.className='add-btn';btn.textContent='+ Plan';btn.dataset.dest=dest;
+    btn.onclick=function(){togglePlan(btn,name,dest,cat);};
+    footer.appendChild(btn);
+  });
+  document.getElementById('planStartInput').addEventListener('keydown',function(e){if(e.key==='Enter')setPlanStart();});
+});
+</script>
+</body>
+</html>
